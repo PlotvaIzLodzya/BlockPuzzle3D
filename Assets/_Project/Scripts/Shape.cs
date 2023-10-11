@@ -6,7 +6,17 @@ using UnityEngine;
 namespace Assets.BlockPuzzle
 {
 
-    public class Shape : MonoBehaviour
+    interface IGrab
+    {
+        public Transform transform { get; }
+
+        public void Grab();
+        public void Place();
+        public void Release();
+        public void SetPosition(Vector3 position);
+    }
+
+    public class Shape : MonoBehaviour, IGrab
     {
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
@@ -14,18 +24,24 @@ namespace Assets.BlockPuzzle
         private bool _choosen;
         private bool _placed;
         private Vector3 _defaultPosition;
+        private Vector3 _offset;
+        private MeshRenderer _renderer;
 
         public void Construct()
         {
+            var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+            _offset = transform.position - vectorInt;
+
             _movement.Construct(transform);
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
+            _renderer = GetComponent<MeshRenderer>();
+            _renderer.materials[1].SetFloat("_Scale", 1);
         }
 
         [ContextMenu(nameof(DarkMagic))]
         private void DarkMagic()
         {
-
             var rb = gameObject.AddComponent<Rigidbody>();
             rb.isKinematic = true;
             rb.useGravity = false;
@@ -44,27 +60,47 @@ namespace Assets.BlockPuzzle
             collider.convex = true;
             collider.isTrigger = true;
 
-            DestroyImmediate(currentRender);
-            DestroyImmediate(currentFilter);
+            DestroyImmediate(renderer);
+            DestroyImmediate(filter);
 
 
             EditorUtility.SetDirty(gameObject);
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void Release()
         {
-            if (_choosen == false)
-                return;
+            _choosen = false;
+            _renderer.materials[1].SetFloat("_Scale", 1);
 
-            _movement.Return();
-            _rotation.Return();
+            if (_placed == false)
+                _movement.MoveTo(_defaultPosition);
         }
 
-        private void OnMouseDown()
+        public void Place()
+        {
+            _movement.Lift(0);
+            _renderer.materials[1].SetFloat("_Scale", 1);
+            _placed = true;
+            _choosen = false;
+        }
+
+        public void Grab()
         {
             _choosen = true;
             _placed = false;
-            _movement.Move(Vector3.up);
+            _renderer.materials[1].SetFloat("_Scale", 1.05f);
+            _movement.Lift(2);
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            var step = 0.2f;
+            var x = position.x % step;
+            var y = transform.position.y;
+            var z = position.z % step;
+            var convertedPosition  = position - new Vector3(x, y, z);
+            convertedPosition.y = transform.position.y;
+            transform.position = convertedPosition;
         }
 
         public void Update()
@@ -75,33 +111,12 @@ namespace Assets.BlockPuzzle
             if (_movement.IsMoving || _rotation.IsRotating)
                 return;
 
-            if(Input.GetKeyDown(KeyCode.W))
-                _movement.Move(Vector3.forward);
-            if(Input.GetKeyDown(KeyCode.S))
-                _movement.Move(Vector3.back);
-            if(Input.GetKeyDown(KeyCode.A))
-                _movement.Move(Vector3.left);
-            if(Input.GetKeyDown(KeyCode.D))
-                _movement.Move(Vector3.right);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _movement.Move(Vector3.down);
-                _placed = true;
-                _choosen = false;
-            }
-
+            if (Input.GetKeyDown(KeyCode.R))
+                _rotation.Rotate(Vector3.forward*4);
             if(Input.GetKeyDown(KeyCode.Q))
                 _rotation.Rotate(Vector3.down);
             if(Input.GetKeyDown(KeyCode.E))
                 _rotation.Rotate(Vector3.up);
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _choosen = false;
-
-                if(_placed == false)
-                    _movement.MoveTo(_defaultPosition);
-            }
         }
     }
 
@@ -172,7 +187,7 @@ namespace Assets.BlockPuzzle
         private Coroutine _movingCoroutine;
         public Vector3 LastPos { get; private set; }
 
-        public bool IsMoving { get; private set; }  
+        public bool IsMoving { get; private set; }
 
         public void Construct(Transform transform)
         {
@@ -180,17 +195,12 @@ namespace Assets.BlockPuzzle
             LastPos = transform.position;
         }
 
-        public Vector3 Move(Vector3 direction)
+        public void Lift(float height)
         {
-            direction.x *= 0.5f;
-            direction.z *= 0.5f;
-            var position = _transform.position + direction;
             Stop();
-            _movingCoroutine = Game.Instance.StartCoroutine(Moving(position, 0.1f));
-
-            return position;
+            _movingCoroutine = Game.Instance.StartCoroutine(Lifting(height, 0.2f));
         }
-        
+
         public void MoveTo(Vector3 position)
         {
             Stop();
@@ -199,7 +209,7 @@ namespace Assets.BlockPuzzle
 
         public void Stop()
         {
-            if(_movingCoroutine != null)
+            if (_movingCoroutine != null)
                 Game.Instance.StopCoroutine(_movingCoroutine);
         }
 
@@ -207,6 +217,30 @@ namespace Assets.BlockPuzzle
         {
             Stop();
             _movingCoroutine = Game.Instance.StartCoroutine(Moving(LastPos, 0.06f));
+        }
+
+        private IEnumerator Lifting(float height, float time)
+        {
+            float elapsedTime = 0;
+            float lerp = 0f;
+            var startHeight = _transform.position.y;
+            var position = _transform.position;
+            IsMoving = true;
+
+            while (elapsedTime < time)
+            {
+                elapsedTime += Time.deltaTime;
+                lerp = elapsedTime / time;
+                position = _transform.position;
+                position.y = Mathf.Lerp(startHeight,height,lerp);
+
+                _transform.position = position;
+                yield return null;
+            }
+
+            IsMoving = false;
+            _transform.position = position;
+            LastPos = position;
         }
 
         private IEnumerator Moving(Vector3 position, float time)

@@ -10,10 +10,6 @@ namespace Assets.BlockPuzzle
         {
             foreach (Shape shape in _shape)
             {
-                var x = UnityEngine.Random.Range(-3 , 3);
-                var z = UnityEngine.Random.Range(-3 , 3);
-                var position = new Vector3(x, 0, z);
-                shape.transform.position += position;
                 shape.Construct();
             }
         }
