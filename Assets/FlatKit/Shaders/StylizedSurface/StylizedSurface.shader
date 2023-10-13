@@ -95,6 +95,7 @@
     {
         Tags {
             "RenderType"="Opaque"
+            "Glowable"="True" 
         }
         LOD 200
 
