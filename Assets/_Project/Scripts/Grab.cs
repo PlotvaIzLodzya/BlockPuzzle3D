@@ -16,7 +16,7 @@ namespace Assets.BlockPuzzle.Controll
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, 100, _groundMask))
                 {
-                    var position = hit.point + _currentOffset;
+                    var position = hit.point;
                     _currentGrab.SetPosition(position);
                 }
 

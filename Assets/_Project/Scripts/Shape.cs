@@ -36,7 +36,7 @@ namespace Assets.BlockPuzzle
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
             _renderer = GetComponent<MeshRenderer>();
-            _renderer.materials[1].SetFloat("_Scale", 1);
+            //_renderer.materials[1].SetFloat("_Scale", 1);
         }
 
         [ContextMenu(nameof(DarkMagic))]
@@ -70,7 +70,7 @@ namespace Assets.BlockPuzzle
         public void Release()
         {
             _choosen = false;
-            _renderer.materials[1].SetFloat("_Scale", 1);
+            //_renderer.materials[1].SetFloat("_Scale", 1);
 
             if (_placed == false)
                 _movement.MoveTo(_defaultPosition);
@@ -79,7 +79,7 @@ namespace Assets.BlockPuzzle
         public void Place()
         {
             _movement.Lift(0);
-            _renderer.materials[1].SetFloat("_Scale", 1);
+            //_renderer.materials[1].SetFloat("_Scale", 1);
             _placed = true;
             _choosen = false;
         }
@@ -88,7 +88,7 @@ namespace Assets.BlockPuzzle
         {
             _choosen = true;
             _placed = false;
-            _renderer.materials[1].SetFloat("_Scale", 1.05f);
+            //_renderer.materials[1].SetFloat("_Scale", 1.05f);
             _movement.Lift(2);
         }
 
