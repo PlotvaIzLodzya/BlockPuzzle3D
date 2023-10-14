@@ -5,21 +5,49 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
+    [Serializable]
+    public class GroundProjection
+    {
+        [SerializeField] private LayerMask _layerMask;
+
+        private Trigger _trigger;
+        private float _halfHeight;
+
+        public bool IsEnoughSpace => _trigger.IsTriggering == false;
+
+        public void Construct(Trigger trigger)
+        {
+            _trigger = trigger;
+
+            if (Physics.Raycast(_trigger.transform.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
+                _halfHeight = hitInfo.distance;
+        }
+
+        public void Update()
+        {
+            if (Physics.Raycast(_trigger.transform.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
+                _trigger.transform.position = hitInfo.point + Vector3.up* _halfHeight;
+        }
+    }
+
 
     interface IGrab
     {
         public Transform transform { get; }
-
+        public bool CanPlace();
         public void Grab();
         public void Place();
-        public void Release();
+        public void Return();
         public void SetPosition(Vector3 position);
     }
 
     public class Shape : MonoBehaviour, IGrab
     {
+
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
+        [SerializeField] private Trigger _trigger;
+        [SerializeField] private GroundProjection _groundProjection;
 
         private bool _choosen;
         private bool _placed;
@@ -36,50 +64,57 @@ namespace Assets.BlockPuzzle
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
             _renderer = GetComponent<MeshRenderer>();
-            //_renderer.materials[1].SetFloat("_Scale", 1);
+            _groundProjection.Construct(_trigger);
         }
 
         [ContextMenu(nameof(DarkMagic))]
         private void DarkMagic()
         {
             var rb = gameObject.AddComponent<Rigidbody>();
+
             rb.isKinematic = true;
             rb.useGravity = false;
 
-            var view = new GameObject("ShapeRender");
-            view.transform.SetParent(transform, false);
-            view.transform.localScale = Vector3.one*0.95f;
-            var renderer = view.AddComponent<MeshRenderer>();
-            var filter = view.AddComponent<MeshFilter>();
+            var collisionCollider = new GameObject("CollisionCollider");
+            collisionCollider.transform.SetParent(transform, false);
+            collisionCollider.transform.localScale = Vector3.one*0.95f;
+            var renderer = collisionCollider.AddComponent<MeshRenderer>();
+            var filter = collisionCollider.AddComponent<MeshFilter>();
             var currentRender = GetComponent<MeshRenderer>();
             var currentFilter = GetComponent<MeshFilter>();
             renderer.sharedMaterial = currentRender.sharedMaterial;
             filter.sharedMesh = currentFilter.sharedMesh;
 
-            var collider = view.AddComponent<MeshCollider>();
-            collider.convex = true;
-            collider.isTrigger = true;
+            collisionCollider.AddComponent<MeshCollider>()
+                             .SetTrigger(true);
 
             DestroyImmediate(renderer);
             DestroyImmediate(filter);
 
+            var groundProjection = Instantiate(collisionCollider, transform);
+            groundProjection.name = "GroundProjection";
+            groundProjection.transform.localScale = Vector3.one;
+            _trigger = groundProjection.AddComponent<Trigger>();
 
             EditorUtility.SetDirty(gameObject);
         }
 
-        public void Release()
+        public void Return()
         {
             _choosen = false;
-            //_renderer.materials[1].SetFloat("_Scale", 1);
 
             if (_placed == false)
                 _movement.MoveTo(_defaultPosition);
         }
 
+        public bool CanPlace()
+        {
+            return _groundProjection.IsEnoughSpace;
+        }
+
         public void Place()
         {
             _movement.Lift(0);
-            //_renderer.materials[1].SetFloat("_Scale", 1);
             _placed = true;
             _choosen = false;
         }
@@ -88,7 +123,6 @@ namespace Assets.BlockPuzzle
         {
             _choosen = true;
             _placed = false;
-            //_renderer.materials[1].SetFloat("_Scale", 1.05f);
             _movement.Lift(2);
         }
 
@@ -105,6 +139,8 @@ namespace Assets.BlockPuzzle
 
         public void Update()
         {
+            _groundProjection.Update();
+
             if( _choosen == false )
                 return;
 

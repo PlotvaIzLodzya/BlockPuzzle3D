@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Assets.BlockPuzzle.Controll
 {
@@ -7,7 +8,6 @@ namespace Assets.BlockPuzzle.Controll
         [SerializeField] private LayerMask _groundMask;
 
         private IGrab _currentGrab;
-        private Vector3 _currentOffset;
 
         private void Update()
         {
@@ -22,14 +22,23 @@ namespace Assets.BlockPuzzle.Controll
 
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    _currentGrab.Release();
+                    _currentGrab.Return();
                     _currentGrab = null;
                 }
 
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
-                    _currentGrab.Place();
-                    _currentGrab = null;
+                    if (_currentGrab.CanPlace())
+                    {
+                        _currentGrab.Place();
+                        _currentGrab = null;
+                    }
+                    else
+                    {
+                        _currentGrab.Return();
+                        _currentGrab = null;
+                    }
+
                 }
             }
 
@@ -38,9 +47,6 @@ namespace Assets.BlockPuzzle.Controll
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit) && hit.rigidbody.TryGetComponent(out IGrab grab))
                 {
-                    if (Physics.Raycast(ray, out RaycastHit groundHit, 100, _groundMask))
-                        _currentOffset = grab.transform.position - groundHit.point;
-
                     _currentGrab = grab;
                     _currentGrab.Grab();
                 }
