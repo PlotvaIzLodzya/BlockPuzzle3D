@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.BlockPuzzle;
 
 public class GlowObject : MonoBehaviour
 {
+	public float LerpTime = 0.5f;
 	public Color GlowColor = Color.green;
-	public float LerpFactor = 10;
+
+	private IHighlightable _highlightable;
+	private float elapsedTime = 0f;
+	private bool _hovered;
 
 	public Renderer[] Renderers
 	{
@@ -23,24 +28,28 @@ public class GlowObject : MonoBehaviour
 
 	void Start()
 	{
+		Construct(GetComponent<IHighlightable>());
 		Renderers = GetComponentsInChildren<Renderer>();
 
 		foreach (var renderer in Renderers)
-		{	
+		{
 			_materials.AddRange(renderer.materials);
 		}
 	}
 
-	private void OnMouseEnter()
+	public void Construct(IHighlightable highlightable)
 	{
-		_targetColor = GlowColor;
-		enabled = true;
+		_highlightable = highlightable;
 	}
 
-	private void OnMouseExit()
+	private void OnMouseEnter()
 	{
-		_targetColor = Color.black;
-		enabled = true;
+		_hovered = true;
+	}
+
+	public void OnMouseExit()
+	{
+		_hovered = false;
 	}
 
 	/// <summary>
@@ -48,16 +57,30 @@ public class GlowObject : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		_currentColor = Color.Lerp(_currentColor, _targetColor, Time.deltaTime * LerpFactor);
+		float lerp = elapsedTime / LerpTime;
+
+		if (_hovered || _highlightable.IsNeedHighlight)
+		{
+			elapsedTime += Time.deltaTime;
+			_targetColor = GlowColor;
+		}
+		else
+		{
+            _currentColor = Color.black;
+			elapsedTime = 0f;
+		}
+
+		_currentColor = Color.Lerp(_currentColor, _targetColor, lerp);
+
+        if (lerp>=1)
+        {
+			return;
+        }
+
 
 		for (int i = 0; i < _materials.Count; i++)
 		{
 			_materials[i].SetColor("_GlowColor", _currentColor);
-		}
-
-		if (_currentColor.Equals(_targetColor))
-		{
-			enabled = false;
 		}
 	}
 }

@@ -5,45 +5,7 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
-    [Serializable]
-    public class GroundProjection
-    {
-        [SerializeField] private LayerMask _layerMask;
-
-        private ITrigger _trigger;
-        private float _halfHeight;
-        private Transform _projectionPoint;
-
-        public bool IsEnoughSpace => _trigger.IsTriggering == false;
-
-        public void Construct(ITrigger trigger, Transform projectionPoint)
-        {
-            _projectionPoint = projectionPoint;
-            _trigger = trigger;
-
-            if (Physics.Raycast(_trigger.transform.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
-                _halfHeight = hitInfo.distance;
-        }
-
-        public void Update()
-        {
-            if (Physics.Raycast(_projectionPoint.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
-                _trigger.transform.position = hitInfo.point + Vector3.up* _halfHeight;
-        }
-    }
-
-
-    interface IGrab
-    {
-        public Transform transform { get; }
-        public bool CanPlace();
-        public void Grab();
-        public void Place();
-        public void Return();
-        public void SetPosition(Vector3 position);
-    }
-
-    public class Shape : MonoBehaviour, IGrab
+    public class Shape : MonoBehaviour, IGrab, IHighlightable
     {
 
         [SerializeField] private ShapeMovement _movement;
@@ -56,6 +18,8 @@ namespace Assets.BlockPuzzle
         private Vector3 _offset;
         private MeshRenderer _renderer;
 
+        public bool IsNeedHighlight { get;private set; }
+
         public void Construct()
         {
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
@@ -65,7 +29,7 @@ namespace Assets.BlockPuzzle
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
             _renderer = GetComponent<MeshRenderer>();
-            _groundProjection.Construct(GetComponentInChildren<ITrigger>(),transform);
+            _groundProjection.Construct(GetComponentInChildren<ITrigger>(), transform);
         }
 
         [ContextMenu(nameof(DarkMagic))]
@@ -97,6 +61,9 @@ namespace Assets.BlockPuzzle
             groundProjection.transform.localScale = Vector3.one *0.98f;
             groundProjection.AddComponent<Trigger>();
 
+            var glowObject = gameObject.AddComponent<GlowObject>();
+
+
             EditorUtility.SetDirty(gameObject);
         }
 
@@ -104,6 +71,7 @@ namespace Assets.BlockPuzzle
         {
             _choosen = false;
 
+            IsNeedHighlight = false;
             if (_placed == false)
                 _movement.MoveTo(_defaultPosition);
         }
@@ -116,12 +84,14 @@ namespace Assets.BlockPuzzle
         public void Place()
         {
             _movement.Lift(0);
+            IsNeedHighlight = false;
             _placed = true;
             _choosen = false;
         }
 
         public void Grab()
         {
+            IsNeedHighlight = true;
             _choosen = true;
             _placed = false;
             _movement.Lift(2);

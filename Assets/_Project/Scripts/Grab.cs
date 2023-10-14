@@ -6,6 +6,7 @@ namespace Assets.BlockPuzzle.Controll
     public class Grab: MonoBehaviour
     {
         [SerializeField] private LayerMask _groundMask;
+        [SerializeField] private LayerMask _grabMask;
 
         private IGrab _currentGrab;
 
@@ -38,21 +39,18 @@ namespace Assets.BlockPuzzle.Controll
                         _currentGrab.Return();
                         _currentGrab = null;
                     }
-
                 }
             }
 
             if (Input.GetMouseButtonDown(0) && _currentGrab == null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit) && hit.rigidbody.TryGetComponent(out IGrab grab))
+                if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrab grab))
                 {
                     _currentGrab = grab;
                     _currentGrab.Grab();
                 }
             }
-
-
         }
     }
 }

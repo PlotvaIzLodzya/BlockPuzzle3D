@@ -7,12 +7,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OutlineMaterial
-  m_Shader: {fileID: 4800000, guid: 4115f39e93d986c488adef7ef218bf52, type: 3}
+  m_Name: FrameMaterial
+  m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_ValidKeywords:
+  - _CELPRIMARYMODE_SINGLE
+  - _TEXTUREBLENDINGMODE_MULTIPLY
+  m_InvalidKeywords:
+  - _ALLOWALPHAOVERFLOW_OFF
+  - _UNITYSHADOWMODE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -69,16 +73,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AllowAlphaOverflow: 0
     - _AlphaClip: 0
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CameraDistanceFadeClose: 0
+    - _CameraDistanceFadeFar: 10
     - _CelExtraEnabled: 0
     - _CelNumSteps: 3
     - _CelPrimaryMode: 1
     - _Cull: 2
     - _Cutoff: 0.5
+    - _Depth: 100
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _FlatRimEdgeSmoothness: 0.5
@@ -124,6 +132,8 @@ Material:
     - _UnityShadowMode: 0
     - _UnityShadowPower: 0.2
     - _UnityShadowSharpness: 1
+    - _UvFadeX: 0.1
+    - _UvFadeY: 0.1
     - _VertexColorsEnabled: 0
     - _ZTest: 0
     - _ZWrite: 0
