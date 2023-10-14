@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.BlockPuzzle
+namespace Assets.BlockPuzzle.Controll
 {
     interface IGrab
     {
@@ -10,10 +10,5 @@ namespace Assets.BlockPuzzle
         public void Place();
         public void Return();
         public void SetPosition(Vector3 position);
-    }
-
-    public interface IHighlightable
-    {
-        public bool IsNeedHighlight { get; }
     }
 }

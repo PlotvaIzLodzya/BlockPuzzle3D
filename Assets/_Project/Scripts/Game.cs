@@ -1,30 +1,36 @@
-﻿using TMPro;
+﻿using Assets.BlockPuzzle.HUD;
+using Assets.BlockPuzzle.Puzzles;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
-    public static class StringExtensions
-    {
-        public static string AddColor(this string text, Color col) => $"<color={ColorHexFromUnityColor(col)}>{text}</color>";
-        public static string ColorHexFromUnityColor(this Color unityColor) => $"#{ColorUtility.ToHtmlStringRGBA(unityColor)}";       
-    }
-
     public class Game: MonoBehaviour
     {
-        public static Game Instance { get; private set; }
-        //public TMP_Text _text;
+        [SerializeField] private Puzzle _puzzle;
+        [SerializeField] private GameUI _gameUI;
+
+        public static MonoBehaviour Instance { get; private set; }
+        private IComplition _levelComplition;
 
         private void Awake()
         {
-            //_text.text = $"" +
-            //$"{"H".AddColor(Color.red)}" +
-            //$"{"E".AddColor(Color.blue)}" +
-            //$"{"L".AddColor(Color.green)}" +
-            //$"{"L".AddColor(Color.white)}" +
-            //$"{"O".AddColor(Color.yellow)}";
-
-            //_text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
             Instance = this;
+            _levelComplition = _puzzle.Construct();
+            _levelComplition.OnChange += OnLevelProgress;
+            _gameUI.Construct();
+        }
+
+        private void OnDestroy()
+        {
+            _levelComplition.OnChange -= OnLevelProgress;
+        }
+
+        private void OnLevelProgress()
+        {
+            if(_levelComplition.Completed)
+            {
+                _gameUI.OnLevelEnd();
+            }
         }
     }
 }

@@ -1,9 +1,12 @@
+using Assets.BlockPuzzle.Controll;
+using Assets.BlockPuzzle.View;
 using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-namespace Assets.BlockPuzzle
+namespace Assets.BlockPuzzle.Puzzles
 {
     public class Shape : MonoBehaviour, IGrab, IHighlightable
     {
@@ -13,12 +16,13 @@ namespace Assets.BlockPuzzle
         [SerializeField] private GroundProjection _groundProjection;
 
         private bool _choosen;
-        private bool _placed;
         private Vector3 _defaultPosition;
+        private Quaternion _defaultRotation;
         private Vector3 _offset;
         private MeshRenderer _renderer;
 
         public bool IsNeedHighlight { get;private set; }
+        public bool Placed { get; private set; }
 
         public void Construct()
         {
@@ -28,6 +32,7 @@ namespace Assets.BlockPuzzle
             _movement.Construct(transform);
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
+            _defaultRotation = transform.rotation;
             _renderer = GetComponent<MeshRenderer>();
             _groundProjection.Construct(GetComponentInChildren<ITrigger>(), transform);
         }
@@ -72,8 +77,12 @@ namespace Assets.BlockPuzzle
             _choosen = false;
 
             IsNeedHighlight = false;
-            if (_placed == false)
+
+            if (Placed == false)
+            {
                 _movement.MoveTo(_defaultPosition);
+                _rotation.RotateTo(_defaultRotation);
+            }
         }
 
         public bool CanPlace()
@@ -85,7 +94,7 @@ namespace Assets.BlockPuzzle
         {
             _movement.Lift(0);
             IsNeedHighlight = false;
-            _placed = true;
+            Placed = true;
             _choosen = false;
         }
 
@@ -93,7 +102,7 @@ namespace Assets.BlockPuzzle
         {
             IsNeedHighlight = true;
             _choosen = true;
-            _placed = false;
+            Placed = false;
             _movement.Lift(2);
         }
 
@@ -156,6 +165,12 @@ namespace Assets.BlockPuzzle
             _rotatingCoroutine = Game.Instance.StartCoroutine(Rotating(position, 0.2f));
         }
 
+        public void RotateTo(Quaternion rotation)
+        {
+            Stop();
+            _rotatingCoroutine = Game.Instance.StartCoroutine(Rotating(rotation, 0.06f));
+        }
+
         public void Stop()
         {
             if (_rotatingCoroutine != null)
@@ -196,6 +211,7 @@ namespace Assets.BlockPuzzle
 
         private Transform _transform;
         private Coroutine _movingCoroutine;
+
         public Vector3 LastPos { get; private set; }
 
         public bool IsMoving { get; private set; }
