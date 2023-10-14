@@ -2,7 +2,7 @@
 
 namespace Assets.BlockPuzzle
 {
-    public class Trigger : MonoBehaviour
+    public class Trigger : MonoBehaviour, ITrigger
     {
         public bool IsTriggering { get; private set; }
         public bool IsTriggered { get; private set; }

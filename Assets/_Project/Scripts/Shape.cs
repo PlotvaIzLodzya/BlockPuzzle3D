@@ -10,13 +10,15 @@ namespace Assets.BlockPuzzle
     {
         [SerializeField] private LayerMask _layerMask;
 
-        private Trigger _trigger;
+        private ITrigger _trigger;
         private float _halfHeight;
+        private Transform _projectionPoint;
 
         public bool IsEnoughSpace => _trigger.IsTriggering == false;
 
-        public void Construct(Trigger trigger)
+        public void Construct(ITrigger trigger, Transform projectionPoint)
         {
+            _projectionPoint = projectionPoint;
             _trigger = trigger;
 
             if (Physics.Raycast(_trigger.transform.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
@@ -25,7 +27,7 @@ namespace Assets.BlockPuzzle
 
         public void Update()
         {
-            if (Physics.Raycast(_trigger.transform.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
+            if (Physics.Raycast(_projectionPoint.position, Vector3.down, out RaycastHit hitInfo, 10f, _layerMask))
                 _trigger.transform.position = hitInfo.point + Vector3.up* _halfHeight;
         }
     }
@@ -46,7 +48,6 @@ namespace Assets.BlockPuzzle
 
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
-        [SerializeField] private Trigger _trigger;
         [SerializeField] private GroundProjection _groundProjection;
 
         private bool _choosen;
@@ -64,7 +65,7 @@ namespace Assets.BlockPuzzle
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
             _renderer = GetComponent<MeshRenderer>();
-            _groundProjection.Construct(_trigger);
+            _groundProjection.Construct(GetComponentInChildren<ITrigger>(),transform);
         }
 
         [ContextMenu(nameof(DarkMagic))]
@@ -93,8 +94,8 @@ namespace Assets.BlockPuzzle
 
             var groundProjection = Instantiate(collisionCollider, transform);
             groundProjection.name = "GroundProjection";
-            groundProjection.transform.localScale = Vector3.one;
-            _trigger = groundProjection.AddComponent<Trigger>();
+            groundProjection.transform.localScale = Vector3.one *0.98f;
+            groundProjection.AddComponent<Trigger>();
 
             EditorUtility.SetDirty(gameObject);
         }
@@ -139,13 +140,17 @@ namespace Assets.BlockPuzzle
 
         public void Update()
         {
+
             _groundProjection.Update();
 
             if( _choosen == false )
                 return;
 
+
             if (_movement.IsMoving || _rotation.IsRotating)
                 return;
+
+
 
             if (Input.GetKeyDown(KeyCode.R))
                 _rotation.Rotate(Vector3.forward*4);
