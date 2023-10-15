@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Assets.BlockPuzzle.Controll
 {
     public class Grab: MonoBehaviour
     {
-        [SerializeField] private LayerMask _groundMask;
-        [SerializeField] private LayerMask _grabMask;
+        private LayerMask _groundMask;
+        private LayerMask _grabMask;
 
         private IGrab _currentGrab;
+        
+        public void Construct(Masks masks)
+        {
+            _grabMask = masks.Grab;
+            _groundMask = masks.Ground;
+        }
 
         private void Update()
         {
@@ -30,15 +35,11 @@ namespace Assets.BlockPuzzle.Controll
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
                     if (_currentGrab.CanPlace())
-                    {
                         _currentGrab.Place();
-                        _currentGrab = null;
-                    }
                     else
-                    {
                         _currentGrab.Return();
-                        _currentGrab = null;
-                    }
+
+                    _currentGrab = null;
                 }
             }
 

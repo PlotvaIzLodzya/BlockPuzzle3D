@@ -1,4 +1,6 @@
-﻿using Assets.BlockPuzzle.HUD;
+﻿using Assets.BlockPuzzle.Controll;
+using Assets.BlockPuzzle.Dependency;
+using Assets.BlockPuzzle.HUD;
 using Assets.BlockPuzzle.Puzzles;
 using UnityEngine;
 
@@ -8,14 +10,21 @@ namespace Assets.BlockPuzzle
     {
         [SerializeField] private Puzzle _puzzle;
         [SerializeField] private GameUI _gameUI;
+        [SerializeField] private Masks _masks;
+        [SerializeField] private Grab _grab;
 
-        public static MonoBehaviour Instance { get; private set; }
         private IComplition _levelComplition;
+
+        public static MonoBehaviour CoroutineHandler { get; private set; }
 
         private void Awake()
         {
-            Instance = this;
-            _levelComplition = _puzzle.Construct();
+            if(CoroutineHandler == null)
+                CoroutineHandler = this;
+
+            _grab.Construct(_masks);
+            var puzzleDependency = new PuzzleDependency(_masks); 
+            _levelComplition = _puzzle.Construct(puzzleDependency);
             _levelComplition.OnChange += OnLevelProgress;
             _gameUI.Construct();
         }

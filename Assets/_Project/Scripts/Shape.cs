@@ -1,40 +1,41 @@
 using Assets.BlockPuzzle.Controll;
+using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.View;
 using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
     public class Shape : MonoBehaviour, IGrab, IHighlightable
     {
-
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
         [SerializeField] private GroundProjection _groundProjection;
-
+        
+        private LayerMask _LevelComplitionMask;
         private bool _choosen;
         private Vector3 _defaultPosition;
         private Quaternion _defaultRotation;
         private Vector3 _offset;
         private MeshRenderer _renderer;
 
-        public bool IsNeedHighlight { get;private set; }
+        public bool IsRequireHighlight { get;private set; }
         public bool Placed { get; private set; }
 
-        public void Construct()
+        public void Construct(PuzzleDependency puzzleDependency)
         {
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _offset = transform.position - vectorInt;
+            _LevelComplitionMask = puzzleDependency.Masks.LevelComplition;
 
             _movement.Construct(transform);
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
             _defaultRotation = transform.rotation;
             _renderer = GetComponent<MeshRenderer>();
-            _groundProjection.Construct(GetComponentInChildren<ITrigger>(), transform);
+            _groundProjection = new GroundProjection(GetComponentInChildren<ITrigger>(), transform, puzzleDependency.Masks.Ground);
         }
 
         [ContextMenu(nameof(DarkMagic))]
@@ -66,8 +67,7 @@ namespace Assets.BlockPuzzle.Puzzles
             groundProjection.transform.localScale = Vector3.one *0.98f;
             groundProjection.AddComponent<Trigger>();
 
-            var glowObject = gameObject.AddComponent<GlowObject>();
-
+            gameObject.AddComponent<GlowObject>();
 
             EditorUtility.SetDirty(gameObject);
         }
@@ -76,7 +76,7 @@ namespace Assets.BlockPuzzle.Puzzles
         {
             _choosen = false;
 
-            IsNeedHighlight = false;
+            IsRequireHighlight = false;
 
             if (Placed == false)
             {
@@ -87,20 +87,22 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public bool CanPlace()
         {
-            return _groundProjection.IsEnoughSpace;
+            var isProperPlace = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _LevelComplitionMask);
+            
+            return _groundProjection.IsEnoughSpace && isProperPlace;
         }
 
         public void Place()
         {
             _movement.Lift(0);
-            IsNeedHighlight = false;
+            IsRequireHighlight = false;
             Placed = true;
             _choosen = false;
         }
 
         public void Grab()
         {
-            IsNeedHighlight = true;
+            IsRequireHighlight = true;
             _choosen = true;
             Placed = false;
             _movement.Lift(2);
@@ -119,17 +121,13 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void Update()
         {
-
             _groundProjection.Update();
 
             if( _choosen == false )
                 return;
 
-
             if (_movement.IsMoving || _rotation.IsRotating)
                 return;
-
-
 
             if (Input.GetKeyDown(KeyCode.R))
                 _rotation.Rotate(Vector3.forward*4);
@@ -162,25 +160,25 @@ namespace Assets.BlockPuzzle.Puzzles
             var angle = direction * 45f;
             var position = _transform.rotation * Quaternion.Euler(angle);
             Stop();
-            _rotatingCoroutine = Game.Instance.StartCoroutine(Rotating(position, 0.2f));
+            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(position, 0.2f));
         }
 
         public void RotateTo(Quaternion rotation)
         {
             Stop();
-            _rotatingCoroutine = Game.Instance.StartCoroutine(Rotating(rotation, 0.06f));
+            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(rotation, 0.06f));
         }
 
         public void Stop()
         {
             if (_rotatingCoroutine != null)
-                Game.Instance.StopCoroutine(_rotatingCoroutine);
+                Game.CoroutineHandler.StopCoroutine(_rotatingCoroutine);
         }
 
         public void Return()
         {
             Stop();
-            _rotatingCoroutine = Game.Instance.StartCoroutine(Rotating(_lastRotation, 0.12f));
+            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(_lastRotation, 0.12f));
         }
 
         private IEnumerator Rotating(Quaternion rotation, float time)
@@ -225,25 +223,25 @@ namespace Assets.BlockPuzzle.Puzzles
         public void Lift(float height)
         {
             Stop();
-            _movingCoroutine = Game.Instance.StartCoroutine(Lifting(height, 0.2f));
+            _movingCoroutine = Game.CoroutineHandler.StartCoroutine(Lifting(height, 0.2f));
         }
 
         public void MoveTo(Vector3 position)
         {
             Stop();
-            _movingCoroutine = Game.Instance.StartCoroutine(Moving(position, 0.1f));
+            _movingCoroutine = Game.CoroutineHandler.StartCoroutine(Moving(position, 0.1f));
         }
 
         public void Stop()
         {
             if (_movingCoroutine != null)
-                Game.Instance.StopCoroutine(_movingCoroutine);
+                Game.CoroutineHandler.StopCoroutine(_movingCoroutine);
         }
 
         public void Return()
         {
             Stop();
-            _movingCoroutine = Game.Instance.StartCoroutine(Moving(LastPos, 0.06f));
+            _movingCoroutine = Game.CoroutineHandler.StartCoroutine(Moving(LastPos, 0.06f));
         }
 
         private IEnumerator Lifting(float height, float time)

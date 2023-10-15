@@ -2410,6 +2410,9 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 512
+  _LevelComplitionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &5888441544077139457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,6 +2669,9 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 512
+  _LevelComplitionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8293917611432677873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,6 +2873,9 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 512
+  _LevelComplitionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &9057018626590258296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,6 +3004,9 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 512
+  _LevelComplitionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &9129579213827415408
 MonoBehaviour:
   m_ObjectHideFlags: 0

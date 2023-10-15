@@ -2,6 +2,6 @@
 {
     public interface IHighlightable
     {
-        public bool IsNeedHighlight { get; }
+        public bool IsRequireHighlight { get; }
     }
 }

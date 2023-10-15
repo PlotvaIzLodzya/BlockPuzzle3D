@@ -1,4 +1,5 @@
 ﻿using Assets.BlockPuzzle.Complition;
+using Assets.BlockPuzzle.Dependency;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,11 +20,11 @@ namespace Assets.BlockPuzzle.Puzzles
             EditorUtility.SetDirty(gameObject);
         }
 
-        public IComplition Construct()
+        public IComplition Construct(PuzzleDependency puzzleDependency)
         {
             foreach (Shape shape in _shape)
             {
-                shape.Construct();
+                shape.Construct(puzzleDependency);
             }
 
             _levelComplition.Construct(_shape.Length);
