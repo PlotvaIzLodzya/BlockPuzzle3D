@@ -14,7 +14,7 @@ namespace Assets.BlockPuzzle
 
         public Puzzle GetPuzzle(int index)
         {
-            index = Mathf.Clamp(index, 0, _puzzlePrefabs.Length);
+            index = Mathf.Clamp(index, 0, _puzzlePrefabs.Length-1);
 
             return _puzzlePrefabs[index];
         }
@@ -28,6 +28,7 @@ namespace Assets.BlockPuzzle
         [SerializeField] private PuzzleMaterials _puzzleMaterials;
         [SerializeField] private Grab _grab;
         [SerializeField] private SetScene _setScene;
+        [SerializeField] private int _id;
 
         private IComplition _levelComplition;
 
@@ -38,7 +39,7 @@ namespace Assets.BlockPuzzle
             if(CoroutineHandler == null)
                 CoroutineHandler = this;
 
-            var puzzle = _puzzleFactory.GetPuzzle(0);
+            var puzzle = _puzzleFactory.GetPuzzle(_id);
             var createPuzzle = Instantiate(puzzle);
 
             _grab.Construct(_masks);

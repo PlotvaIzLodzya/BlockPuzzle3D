@@ -958,6 +958,7 @@ MonoBehaviour:
     <FrameMaterial>k__BackingField: {fileID: 2100000, guid: 02b885900f231ef42827011e51f4d973, type: 2}
   _grab: {fileID: 1642679953}
   _setScene: {fileID: 1642679954}
+  _id: 0
 --- !u!4 &1642679952
 Transform:
   m_ObjectHideFlags: 0
