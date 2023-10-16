@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
+
     public class GroundProjection
     {
         private LayerMask _groundMask;

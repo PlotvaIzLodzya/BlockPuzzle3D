@@ -9,6 +9,7 @@ namespace Assets.BlockPuzzle
         [field: SerializeField] public LayerMask Ground { get; private set; }
         [field: SerializeField] public LayerMask LevelComplition { get; private set; }
         [field: SerializeField] public LayerMask Grab { get; private set; }
+        [field: SerializeField] public LayerMask GroundProjection { get; private set; }
     }
 }
 

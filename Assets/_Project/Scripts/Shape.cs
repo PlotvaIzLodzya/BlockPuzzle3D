@@ -29,7 +29,6 @@ namespace Assets.BlockPuzzle.Puzzles
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _offset = transform.position - vectorInt;
             _LevelComplitionMask = puzzleDependency.Masks.LevelComplition;
-
             _movement.Construct(transform);
             _rotation.Construct(transform);
             _defaultPosition = transform.position;
@@ -66,6 +65,7 @@ namespace Assets.BlockPuzzle.Puzzles
             groundProjection.name = "GroundProjection";
             groundProjection.transform.localScale = Vector3.one *0.98f;
             groundProjection.AddComponent<Trigger>();
+            groundProjection.AddComponent<Projection>();
 
             gameObject.AddComponent<GlowObject>();
 

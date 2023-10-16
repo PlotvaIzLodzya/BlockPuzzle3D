@@ -1,6 +1,7 @@
 ﻿using Assets.BlockPuzzle.Puzzles;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle.Complition
@@ -18,6 +19,11 @@ namespace Assets.BlockPuzzle.Complition
         public void Construct(int totalShapeCount)
         {
             _totalShapeCount = totalShapeCount;
+
+            if(GetComponent<Rigidbody>() == null)
+            {
+                transform.AddComponent<Rigidbody>().isKinematic = true;
+            }
         }
 
         private void OnEnable()
