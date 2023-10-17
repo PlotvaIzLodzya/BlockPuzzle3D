@@ -90,7 +90,7 @@ namespace Assets.BlockPuzzle.Puzzles
         public bool CanPlace()
         {
             var isProperPlace = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _LevelComplitionMask);
-
+            Debug.Log(_groundProjection.IsEnoughSpace);
             return _groundProjection.IsEnoughSpace && isProperPlace;
         }
 
@@ -112,7 +112,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void SetPosition(Vector3 position)
         {
-            var step = 0.2f;
+            var step = 0.1f;
             var x = position.x % step;
             var y = transform.position.y;
             var z = position.z % step;
