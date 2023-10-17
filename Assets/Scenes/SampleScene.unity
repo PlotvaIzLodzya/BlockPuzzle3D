@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c072b0c78ba8a4ebec1edd40d3eff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Intensity: 10
+  Intensity: 5
 --- !u!1 &990796681
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _puzzleFactory:
     _puzzlePrefabs:
+    - {fileID: 5078169303148960474, guid: 0c8c4ab1aaed33140b09378e25ef78d8, type: 3}
     - {fileID: 875245298701542726, guid: 67874c80da24f2c4d9c0c4ee8576d6a7, type: 3}
     - {fileID: 3568522006072017100, guid: 4cf6ce02c19f16c49813ede4c97d1f68, type: 3}
     - {fileID: 3781667982499788678, guid: b1fa4b57d1a6d644f95762682f76e60f, type: 3}
