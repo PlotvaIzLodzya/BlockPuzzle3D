@@ -9,6 +9,9 @@ namespace Assets.BlockPuzzle.Puzzles
     {
         [SerializeField] private Shape[] _shape;
         [SerializeField] private LevelComplition _levelComplition;
+        [SerializeField] private float _angleStep = 45;
+        [SerializeField] private float _stepTime = 0.2f;
+        [SerializeField] private float _rotationTime = 0.2f;
 
         public int ShapesCount => _shape.Length;
 
@@ -24,6 +27,10 @@ namespace Assets.BlockPuzzle.Puzzles
         {
             foreach (Shape shape in _shape)
             {
+                puzzleDependency.SetStepAngle(_angleStep)
+                                .SetStepTime(_stepTime)
+                                .SetRotaionTime(_rotationTime);
+
                 shape.Construct(puzzleDependency);
             }
 

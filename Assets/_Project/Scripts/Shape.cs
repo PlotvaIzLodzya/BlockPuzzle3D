@@ -20,6 +20,7 @@ namespace Assets.BlockPuzzle.Puzzles
         private Quaternion _defaultRotation;
         private Vector3 _offset;
         private MeshRenderer _renderer;
+        private float _stepAngle;
 
         public bool IsRequireHighlight { get;private set; }
         public bool Placed { get; private set; }
@@ -29,8 +30,9 @@ namespace Assets.BlockPuzzle.Puzzles
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _offset = transform.position - vectorInt;
             _LevelComplitionMask = puzzleDependency.Masks.LevelComplition;
+            _stepAngle = puzzleDependency.StepAngle;
             _movement.Construct(transform);
-            _rotation.Construct(transform);
+            _rotation.Construct(transform, puzzleDependency.RotationTime);
             _defaultPosition = transform.position;
             _defaultRotation = transform.rotation;
             _renderer = GetComponent<MeshRenderer>();
@@ -88,7 +90,7 @@ namespace Assets.BlockPuzzle.Puzzles
         public bool CanPlace()
         {
             var isProperPlace = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _LevelComplitionMask);
-            
+
             return _groundProjection.IsEnoughSpace && isProperPlace;
         }
 
@@ -130,11 +132,11 @@ namespace Assets.BlockPuzzle.Puzzles
                 return;
 
             if (Input.GetKeyDown(KeyCode.R))
-                _rotation.Rotate(Vector3.forward*4);
+                _rotation.Rotate(Vector3.forward,180);
             if(Input.GetKeyDown(KeyCode.Q))
-                _rotation.Rotate(Vector3.down);
+                _rotation.Rotate(Vector3.down, _stepAngle);
             if(Input.GetKeyDown(KeyCode.E))
-                _rotation.Rotate(Vector3.up);
+                _rotation.Rotate(Vector3.up, _stepAngle);
         }
     }
 
@@ -146,21 +148,23 @@ namespace Assets.BlockPuzzle.Puzzles
         private Transform _transform;
         private Coroutine _rotatingCoroutine;
         private Quaternion _lastRotation;
+        private float _rotationTime;
 
         public bool IsRotating { get; private set; }
 
-        public void Construct(Transform transform)
+        public void Construct(Transform transform, float rotationTime)
         {
             _transform = transform;
+            _rotationTime = rotationTime;
             _lastRotation = transform.rotation;
         }
 
-        public void Rotate(Vector3 direction)
+        public void Rotate(Vector3 direction, float angleStep)
         {
-            var angle = direction * 45f;
+            var angle = direction * angleStep;
             var position = _transform.rotation * Quaternion.Euler(angle);
             Stop();
-            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(position, 0.2f));
+            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(position, _rotationTime));
         }
 
         public void RotateTo(Quaternion rotation)

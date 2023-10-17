@@ -932,6 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _puzzleFactory:
     _puzzlePrefabs:
+    - {fileID: 875245298701542726, guid: 67874c80da24f2c4d9c0c4ee8576d6a7, type: 3}
     - {fileID: 3568522006072017100, guid: 4cf6ce02c19f16c49813ede4c97d1f68, type: 3}
     - {fileID: 3781667982499788678, guid: b1fa4b57d1a6d644f95762682f76e60f, type: 3}
     - {fileID: 2637266355409994538, guid: c4a311f50483e3d49a5ca7a29d2389b4, type: 3}
