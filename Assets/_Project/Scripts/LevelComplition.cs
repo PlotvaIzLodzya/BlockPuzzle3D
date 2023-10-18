@@ -10,7 +10,7 @@ namespace Assets.BlockPuzzle.Complition
     {
         [SerializeField] private Trigger _complitionTrigger;
 
-        private List<Shape> _shapes = new List<Shape>();
+        private List<IShape> _shapes = new List<IShape>();
         private int _totalShapeCount;
 
         public bool Completed => _shapes.Count >= _totalShapeCount;
@@ -40,7 +40,7 @@ namespace Assets.BlockPuzzle.Complition
 
         private void OnColliderEntered(Collider other)
         {
-            if(other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out Shape shape) && shape.Placed)
+            if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out IShape shape) && shape.Placed)
             {
                 if(_shapes.Contains(shape) == false)
                 {
@@ -53,7 +53,7 @@ namespace Assets.BlockPuzzle.Complition
 
         private void OnColliderExit(Collider other)
         {
-            if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out Shape shape))
+            if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out IShape shape))
             {
                 if (_shapes.Contains(shape))
                 {

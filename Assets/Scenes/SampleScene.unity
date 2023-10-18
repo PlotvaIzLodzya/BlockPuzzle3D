@@ -718,6 +718,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022760482}
   m_CullTransparentMesh: 1
+--- !u!1 &1086837282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1086837283}
+  - component: {fileID: 1086837285}
+  - component: {fileID: 1086837284}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1086837283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086837282}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.19999981, y: 1.157, z: 3.0999997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1086837284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086837282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae712f09958dd624b9fe53da80154413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1086837285
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086837282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1134986979
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,8 +998,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _puzzleFactory:
     _puzzlePrefabs:
-    - {fileID: 9028767466337300225, guid: 53c544f195f4e1549bf20b4a936762f1, type: 3}
+    - {fileID: 3311437074552098545, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
     - {fileID: 3568522006072017100, guid: 4cf6ce02c19f16c49813ede4c97d1f68, type: 3}
+    - {fileID: 9028767466337300225, guid: 53c544f195f4e1549bf20b4a936762f1, type: 3}
     - {fileID: 7760824080295477207, guid: 788d8e5e1d7b9074681b7000e13d11bb, type: 3}
     - {fileID: 5078169303148960474, guid: 0c8c4ab1aaed33140b09378e25ef78d8, type: 3}
     - {fileID: 875245298701542726, guid: 67874c80da24f2c4d9c0c4ee8576d6a7, type: 3}

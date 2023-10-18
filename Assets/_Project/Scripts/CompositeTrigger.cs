@@ -16,5 +16,10 @@ namespace Assets.BlockPuzzle
         {
             _triggers = GetComponentsInChildren<Trigger>();
         }
+
+        private void Awake()
+        {
+            GetFromChildren();
+        }
     }
 }

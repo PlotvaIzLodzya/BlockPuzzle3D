@@ -8,7 +8,15 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
-    public class Shape : MonoBehaviour, IGrab, IHighlightable
+
+    public interface IShape
+    {
+        public bool Placed { get; }
+
+        public void Construct(PuzzleDependency dependency);
+    }
+
+    public class Shape : MonoBehaviour, IGrab, IHighlightable, IShape
     {
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
@@ -90,7 +98,7 @@ namespace Assets.BlockPuzzle.Puzzles
         public bool CanPlace()
         {
             var isProperPlace = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _LevelComplitionMask);
-            Debug.Log(_groundProjection.IsEnoughSpace);
+
             return _groundProjection.IsEnoughSpace && isProperPlace;
         }
 
