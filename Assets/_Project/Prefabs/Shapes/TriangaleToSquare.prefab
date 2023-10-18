@@ -176,7 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8416597766066705520}
-  - component: {fileID: 7760824080295477207}
+  - component: {fileID: 5999790330512600572}
   m_Layer: 0
   m_Name: TriangaleToSquare
   m_TagString: Untagged
@@ -204,7 +204,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &7760824080295477207
+--- !u!114 &5999790330512600572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,15 +213,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2121671559743884646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930dc1a5cd10f324dbe6bfe0b9e66ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shape:
-  - {fileID: 1819044346299286425}
-  - {fileID: 1547545057920413584}
-  - {fileID: 1564621937158625993}
-  - {fileID: 6768796369714547801}
-  _levelComplition: {fileID: 8743149410453757709}
+  <GUID>k__BackingField: deb145bb-3588-4710-88c9-5999bd357173
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

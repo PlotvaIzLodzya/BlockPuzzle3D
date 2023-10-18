@@ -3,14 +3,30 @@ using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.HUD;
 using Assets.BlockPuzzle.Puzzles;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
+
     [Serializable]
     public class PuzzleFactory
     {
         [SerializeField] private Puzzle[] _puzzlePrefabs;
+
+        public IEnumerable<Puzzle> GetPuzzles<TPuzzle>() where TPuzzle : Puzzle
+        {
+            var puzzles = new List<Puzzle>();
+
+            foreach (var puzzle in _puzzlePrefabs)
+            {
+                if (puzzle is TPuzzle)
+                    puzzles.Add(puzzle);
+            }
+
+            return puzzles;
+        }
 
         public Puzzle GetPuzzle(int index)
         {

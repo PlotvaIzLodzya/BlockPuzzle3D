@@ -1007,7 +1007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3790616622414008286}
-  - component: {fileID: 3311437074552098545}
+  - component: {fileID: 1642926784519211395}
   m_Layer: 0
   m_Name: 49Puzzle
   m_TagString: Untagged
@@ -1044,7 +1044,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &3311437074552098545
+--- !u!114 &1642926784519211395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1053,10 +1053,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 941062891027405307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930dc1a5cd10f324dbe6bfe0b9e66ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 59db02abcdce8494f8a8bb26a7820b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelComplition: {fileID: 6082189700508061395}
+  <GUID>k__BackingField: 06df054a-6f05-4c17-9da1-ea9a1da52c65
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2
@@ -1807,7 +1807,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 0.2, z: 3}
+  m_Size: {x: 3, y: 0.15, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2040330549962904120
 GameObject:

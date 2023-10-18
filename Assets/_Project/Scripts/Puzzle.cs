@@ -5,14 +5,21 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
-    public class Puzzle : MonoBehaviour
+    public enum PuzzleType
     {
-        [SerializeField] private LevelComplition _levelComplition;
+        Letter,
+        Square,
+        Puzzle49,
+    }
+
+    public class Puzzle : GUIDObject
+    {
         [SerializeField] private float _angleStep = 45;
         [SerializeField] private float _stepTime = 0.2f;
         [SerializeField] private float _rotationTime = 0.2f;
 
         private IShape[] _shape;
+        private LevelComplition _levelComplition;
 
         public int ShapesCount => _shape.Length;
 

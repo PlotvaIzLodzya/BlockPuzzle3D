@@ -1156,7 +1156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4751367944708126580}
-  - component: {fileID: 5254685524615911883}
+  - component: {fileID: 3207625513518742516}
   m_Layer: 0
   m_Name: KPuzzle
   m_TagString: Untagged
@@ -1184,7 +1184,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5254685524615911883
+--- !u!114 &3207625513518742516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1193,15 +1193,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5381193163335775887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930dc1a5cd10f324dbe6bfe0b9e66ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f25fbf3abe3fa1469451d818bb16de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shape:
-  - {fileID: 2577701593352046861}
-  - {fileID: 2395334059618078032}
-  - {fileID: 3922277420628929025}
-  - {fileID: 2869314807979802144}
-  _levelComplition: {fileID: 3694158638938201670}
+  <GUID>k__BackingField: 24a28c6b-2a7c-475a-bfb9-5e555d2405d5
+  _angleStep: 45
+  _stepTime: 0.2
+  _rotationTime: 0.2
 --- !u!1 &5887547014777326038
 GameObject:
   m_ObjectHideFlags: 0

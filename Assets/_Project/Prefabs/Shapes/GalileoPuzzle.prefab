@@ -372,7 +372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3354366634893093083}
-  - component: {fileID: 9028767466337300225}
+  - component: {fileID: 7096889288626095073}
   m_Layer: 0
   m_Name: GalileoPuzzle
   m_TagString: Untagged
@@ -401,7 +401,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &9028767466337300225
+--- !u!114 &7096889288626095073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -410,16 +410,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2216686738440908341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930dc1a5cd10f324dbe6bfe0b9e66ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shape:
-  - {fileID: 3134684239730340005}
-  - {fileID: 2890570064092789435}
-  - {fileID: 7115230121226384474}
-  - {fileID: 4767798297563674099}
-  - {fileID: 2157683658464838474}
-  _levelComplition: {fileID: 6179961864121393375}
+  <GUID>k__BackingField: 900ab6df-0797-45bb-8f08-c77f2d28b9de
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

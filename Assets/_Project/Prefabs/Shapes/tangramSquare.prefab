@@ -745,7 +745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7442954982438148413}
-  - component: {fileID: 5078169303148960474}
+  - component: {fileID: 812715068241829225}
   m_Layer: 0
   m_Name: tangramSquare
   m_TagString: Untagged
@@ -776,7 +776,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5078169303148960474
+--- !u!114 &812715068241829225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -785,18 +785,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3474062250887127713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930dc1a5cd10f324dbe6bfe0b9e66ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shape:
-  - {fileID: 1780894949185334949}
-  - {fileID: 7449670541340818403}
-  - {fileID: 8149063320402568695}
-  - {fileID: 6684384778122887825}
-  - {fileID: 6752109583322792656}
-  - {fileID: 9177638460950953302}
-  - {fileID: 2055704657307691142}
-  _levelComplition: {fileID: 3517769296336382769}
+  <GUID>k__BackingField: 7eebe063-c36d-4a8a-a71d-78b86c86e381
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

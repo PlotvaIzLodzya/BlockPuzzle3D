@@ -2,6 +2,7 @@
 
 namespace Assets.BlockPuzzle.HUD
 {
+
     public class GameUI: MonoBehaviour
     {
         [SerializeField] private Panel _winScreen;
