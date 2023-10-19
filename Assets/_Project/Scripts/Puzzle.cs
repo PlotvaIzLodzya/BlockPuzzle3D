@@ -14,6 +14,8 @@ namespace Assets.BlockPuzzle.Puzzles
 
     public class Puzzle : GUIDObject
     {
+        [field: SerializeField] public string Name { get; private set; }
+
         [SerializeField] private float _angleStep = 45;
         [SerializeField] private float _stepTime = 0.2f;
         [SerializeField] private float _rotationTime = 0.2f;

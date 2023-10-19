@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
@@ -73,21 +74,43 @@ namespace Assets.BlockPuzzle
             if(CoroutineHandler == null)
                 CoroutineHandler = this;
 
-            //var puzzle = _puzzleFactory.GetRandomPuzzle<LetterPuzzle>();
-            var puzzle = _puzzleFactory.GetPuzzle(0);
+            _grab.Construct(_masks);
+
+            ConstructUI();
+        }
+
+        private void ConstructUI()
+        {
+            var dependencyList = new List<StartPuzzleViewDependency>();
+
+            var puzzles = _puzzleFactory.GetPuzzles<LetterPuzzle>();
+
+            foreach (var puzzle in puzzles)
+            {
+                dependencyList.Add(new StartPuzzleViewDependency(puzzle.Name,
+                                                                () => CreatePuzzle(puzzle.GUID)));
+            }
+
+            var puzzleViewDependency = new PuzzleViewDependency(dependencyList);
+
+            _gameUI.Construct(puzzleViewDependency);
+        }
+
+        private void CreatePuzzle(string guid)
+        {
+            var puzzle = _puzzleFactory.GetPuzzle(guid);
 
             var createPuzzle = Instantiate(puzzle);
 
-            _grab.Construct(_masks);
-            var puzzleDependency = new PuzzleDependency(_masks); 
+            var puzzleDependency = new PuzzleDependency(_masks);
             _levelComplition = createPuzzle.Construct(puzzleDependency);
             _levelComplition.OnChange += OnLevelProgress;
-            _gameUI.Construct();
         }
 
         private void OnDestroy()
         {
-            _levelComplition.OnChange -= OnLevelProgress;
+            if(_levelComplition != null)
+                _levelComplition.OnChange -= OnLevelProgress;
         }
 
         [ContextMenu(nameof(SetScene))]
@@ -100,6 +123,7 @@ namespace Assets.BlockPuzzle
         {
             if(_levelComplition.IsCompleted)
             {
+                _levelComplition.OnChange -= OnLevelProgress;
                 _gameUI.OnLevelEnd();
             }
         }
