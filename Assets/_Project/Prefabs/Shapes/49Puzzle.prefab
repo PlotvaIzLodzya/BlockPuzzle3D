@@ -1023,7 +1023,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 941062891027405307}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1056,7 +1056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59db02abcdce8494f8a8bb26a7820b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: 06df054a-6f05-4c17-9da1-ea9a1da52c65
+  <GUID>k__BackingField: 7fbd2540-909f-4bd9-ae31-e1f91db45905
+  <Name>k__BackingField: Cells 1
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

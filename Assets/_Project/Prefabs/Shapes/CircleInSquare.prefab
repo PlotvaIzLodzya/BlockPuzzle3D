@@ -52,9 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: b2d64d26-52bd-4dd4-9513-792cb1d69cc7
+  <Name>k__BackingField: Circle
   _angleStep: 15
   _stepTime: 0.2
   _rotationTime: 0.06
+  _stepSize: 0.2
 --- !u!1 &981072980147790637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _complitionTrigger: {fileID: 159515701917596151}
+  _guid: 
 --- !u!114 &159515701917596151
 MonoBehaviour:
   m_ObjectHideFlags: 0

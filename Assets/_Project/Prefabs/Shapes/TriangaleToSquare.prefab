@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _complitionTrigger: {fileID: 7480762611061219860}
+  _guid: 
 --- !u!114 &7480762611061219860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,9 +218,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: deb145bb-3588-4710-88c9-5999bd357173
+  <Name>k__BackingField: Triangle
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2
+  _stepSize: 0.2
 --- !u!1 &3469196886942507970
 GameObject:
   m_ObjectHideFlags: 0

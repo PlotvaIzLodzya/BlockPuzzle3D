@@ -790,6 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 7eebe063-c36d-4a8a-a71d-78b86c86e381
+  <Name>k__BackingField: Tangram
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

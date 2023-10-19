@@ -7,13 +7,16 @@ namespace Assets.BlockPuzzle.HUD
     public class PuzzleListView : Panel
     {
         [SerializeField] private StartPuzzleView _startPuzzleViewPrefab;
-        [SerializeField] private GridLayoutGroup _layout;
 
-        public void Construct(IEnumerable<StartPuzzleViewDependency> startPuzzleViewDependencies)
+        private GridLayoutGroup _layout;
+
+        public void Construct(IEnumerable<StartPuzzleDependency> startPuzzleViewDependencies)
         {
+            _layout = GetComponentInChildren<GridLayoutGroup>();
+
             foreach (var dependency in startPuzzleViewDependencies)
             {
-                var view = Instantiate(_startPuzzleViewPrefab, _layout.transform);
+                var view = Instantiate(_startPuzzleViewPrefab, transform);
                 view.Construct(dependency);
             }
         }

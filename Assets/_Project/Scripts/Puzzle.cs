@@ -1,6 +1,5 @@
 ﻿using Assets.BlockPuzzle.Complition;
 using Assets.BlockPuzzle.Dependency;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
@@ -50,6 +49,11 @@ namespace Assets.BlockPuzzle.Puzzles
             _levelComplition.Construct(_shape.Length, GUID);
 
             return _levelComplition;
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

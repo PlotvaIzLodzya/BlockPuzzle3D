@@ -4,9 +4,7 @@ using Assets.BlockPuzzle.HUD;
 using Assets.BlockPuzzle.Puzzles;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
@@ -66,6 +64,7 @@ namespace Assets.BlockPuzzle
         [SerializeField] private SetScene _setScene;
 
         private IComplition _levelComplition;
+        private Puzzle _curentPuzzle;
 
         public static MonoBehaviour CoroutineHandler { get; private set; }
 
@@ -81,30 +80,47 @@ namespace Assets.BlockPuzzle
 
         private void ConstructUI()
         {
-            var dependencyList = new List<StartPuzzleViewDependency>();
+            var letterDependency = CreateDependency<LetterPuzzle>();
+            var squareDependency = CreateDependency<SquarePuzzle>();
+            var puzzle49Dependency = CreateDependency<Puzzle49>();
 
-            var puzzles = _puzzleFactory.GetPuzzles<LetterPuzzle>();
-
-            foreach (var puzzle in puzzles)
-            {
-                dependencyList.Add(new StartPuzzleViewDependency(puzzle.Name,
-                                                                () => CreatePuzzle(puzzle.GUID)));
-            }
-
-            var puzzleViewDependency = new PuzzleViewDependency(dependencyList);
+            var puzzleViewDependency = new PuzzleViewDependency(letterDependency, squareDependency, puzzle49Dependency);
 
             _gameUI.Construct(puzzleViewDependency);
         }
 
+        private IEnumerable<StartPuzzleDependency> CreateDependency<TPuzzle>() where TPuzzle: Puzzle
+        {
+            var dependencyList = new List<StartPuzzleDependency>();
+
+            var puzzles = _puzzleFactory.GetPuzzles<TPuzzle>();
+
+            foreach (var puzzle in puzzles)
+            {
+                dependencyList.Add(new StartPuzzleDependency
+                    (
+                        puzzle,
+                        () => CreatePuzzle(puzzle.GUID))
+                    );
+            }
+
+            return dependencyList;
+        }
+
         private void CreatePuzzle(string guid)
         {
+            if (_curentPuzzle != null)
+                _curentPuzzle.Destroy();
+
             var puzzle = _puzzleFactory.GetPuzzle(guid);
+            _curentPuzzle = puzzle;
 
             var createPuzzle = Instantiate(puzzle);
 
             var puzzleDependency = new PuzzleDependency(_masks);
             _levelComplition = createPuzzle.Construct(puzzleDependency);
             _levelComplition.OnChange += OnLevelProgress;
+            _gameUI.HideMainMenu();
         }
 
         private void OnDestroy()
