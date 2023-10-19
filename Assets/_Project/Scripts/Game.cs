@@ -5,11 +5,11 @@ using Assets.BlockPuzzle.Puzzles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
-
     [Serializable]
     public class PuzzleFactory
     {
@@ -28,11 +28,30 @@ namespace Assets.BlockPuzzle
             return puzzles;
         }
 
+        public Puzzle GetRandomPuzzle<TPuzzle> () where TPuzzle : Puzzle
+        {
+            var puzzles = GetPuzzles<TPuzzle>();
+
+            var index = UnityEngine.Random.Range(0, puzzles.Count());
+
+            return puzzles.ElementAt(index);
+        }
+
         public Puzzle GetPuzzle(int index)
         {
-            index = Mathf.Clamp(index, 0, _puzzlePrefabs.Length-1);
-
             return _puzzlePrefabs[index];
+        }
+
+        public bool TryGetPuzzle(string guid, out Puzzle puzzle)
+        {
+            puzzle = GetPuzzle(guid);
+
+            return puzzle != null;
+        }
+
+        public Puzzle GetPuzzle(string guid)
+        {
+            return _puzzlePrefabs.First(puzzle => puzzle.GUID.Equals(guid));
         }
     }
 
@@ -44,7 +63,6 @@ namespace Assets.BlockPuzzle
         [SerializeField] private PuzzleMaterials _puzzleMaterials;
         [SerializeField] private Grab _grab;
         [SerializeField] private SetScene _setScene;
-        [SerializeField] private int _id;
 
         private IComplition _levelComplition;
 
@@ -55,7 +73,9 @@ namespace Assets.BlockPuzzle
             if(CoroutineHandler == null)
                 CoroutineHandler = this;
 
-            var puzzle = _puzzleFactory.GetPuzzle(_id);
+            //var puzzle = _puzzleFactory.GetRandomPuzzle<LetterPuzzle>();
+            var puzzle = _puzzleFactory.GetPuzzle(0);
+
             var createPuzzle = Instantiate(puzzle);
 
             _grab.Construct(_masks);
@@ -78,7 +98,7 @@ namespace Assets.BlockPuzzle
 
         private void OnLevelProgress()
         {
-            if(_levelComplition.Completed)
+            if(_levelComplition.IsCompleted)
             {
                 _gameUI.OnLevelEnd();
             }

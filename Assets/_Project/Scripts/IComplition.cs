@@ -4,7 +4,7 @@ namespace Assets.BlockPuzzle
 {
     public interface IComplition
     {
-        public bool Completed { get;}
+        public bool IsCompleted { get;}
         public event Action OnChange;
     }
 }

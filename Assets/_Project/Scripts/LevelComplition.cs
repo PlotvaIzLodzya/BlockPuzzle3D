@@ -12,15 +12,17 @@ namespace Assets.BlockPuzzle.Complition
 
         private List<IShape> _shapes = new List<IShape>();
         private int _totalShapeCount;
+        public string _guid;
 
-        public bool Completed => _shapes.Count >= _totalShapeCount;
+        public bool IsCompleted => _shapes.Count >= _totalShapeCount;
         public event Action OnChange;
 
-        public void Construct(int totalShapeCount)
+        public void Construct(int totalShapeCount, string guid)
         {
             _totalShapeCount = totalShapeCount;
+            _guid = guid;
 
-            if(GetComponent<Rigidbody>() == null)
+            if (GetComponent<Rigidbody>() == null)
             {
                 transform.AddComponent<Rigidbody>().isKinematic = true;
             }
@@ -65,6 +67,9 @@ namespace Assets.BlockPuzzle.Complition
         private void OnPlace()
         {
             OnChange?.Invoke();
+
+            if (IsCompleted)
+                SaveService.Save(_guid, 0);
         }
     }
 }

@@ -297,6 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _complitionTrigger: {fileID: 5411723864950916135}
+  _guid: 
 --- !u!114 &5411723864950916135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +418,7 @@ MonoBehaviour:
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2
+  _stepSize: 0.1
 --- !u!1 &2702992113448056911
 GameObject:
   m_ObjectHideFlags: 0

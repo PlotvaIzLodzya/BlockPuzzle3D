@@ -29,6 +29,7 @@ namespace Assets.BlockPuzzle.Puzzles
         private Vector3 _offset;
         private MeshRenderer _renderer;
         private float _stepAngle;
+        private float _stepSize;
 
         public bool IsRequireHighlight { get;private set; }
         public bool Placed { get; private set; }
@@ -36,6 +37,7 @@ namespace Assets.BlockPuzzle.Puzzles
         public void Construct(PuzzleDependency puzzleDependency)
         {
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+            _stepSize = puzzleDependency.StepSize;
             _offset = transform.position - vectorInt;
             _LevelComplitionMask = puzzleDependency.Masks.LevelComplition;
             _stepAngle = puzzleDependency.StepAngle;
@@ -120,7 +122,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void SetPosition(Vector3 position)
         {
-            var step = 0.1f;
+            var step = _stepSize;
             var x = position.x % step;
             var y = transform.position.y;
             var z = position.z % step;

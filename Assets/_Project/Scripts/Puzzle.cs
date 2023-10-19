@@ -17,11 +17,13 @@ namespace Assets.BlockPuzzle.Puzzles
         [SerializeField] private float _angleStep = 45;
         [SerializeField] private float _stepTime = 0.2f;
         [SerializeField] private float _rotationTime = 0.2f;
+        [SerializeField] private float _stepSize = 0.2f;
 
         private IShape[] _shape;
         private LevelComplition _levelComplition;
 
         public int ShapesCount => _shape.Length;
+        public bool IsCompleted => SaveService.HasSave(GUID);
 
         public void GetFromDependencieFromChildren()
         {
@@ -37,12 +39,13 @@ namespace Assets.BlockPuzzle.Puzzles
             {
                 puzzleDependency.SetStepAngle(_angleStep)
                                 .SetStepTime(_stepTime)
+                                .SetStepSize(_stepSize)
                                 .SetRotaionTime(_rotationTime);
 
                 shape.Construct(puzzleDependency);
             }
             
-            _levelComplition.Construct(_shape.Length);
+            _levelComplition.Construct(_shape.Length, GUID);
 
             return _levelComplition;
         }
