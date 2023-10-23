@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 namespace Assets.BlockPuzzle.HUD
 {

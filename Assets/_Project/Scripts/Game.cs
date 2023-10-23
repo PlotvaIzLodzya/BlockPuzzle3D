@@ -29,7 +29,7 @@ namespace Assets.BlockPuzzle
 
         private void Awake()
         {
-            var progressionDependency = new PlayerProgressionDependency(_expGuid, _levelGUID, 80, 17);
+            var progressionDependency = new PlayerProgressionDependency(_expGuid, _levelGUID, 70, 17);
             _playerProgression = new PlayerProgresion(progressionDependency);
 
             if(CoroutineHandler == null)

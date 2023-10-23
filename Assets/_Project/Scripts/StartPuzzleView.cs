@@ -9,10 +9,12 @@ namespace Assets.BlockPuzzle.HUD
     {
         [SerializeField] private TMP_Text _name;
         [SerializeField] private Image _completedSign;
+        [SerializeField] private Image _completedBack;
 
         public void Construct(StartPuzzleDependency dependency)
         {
             _completedSign.gameObject.SetActive(dependency.IsCompleted);
+            _completedBack.gameObject.SetActive(dependency.IsCompleted);
             _name.text = $"{dependency.PuzzleName}";
             Button.onClick.AddListener(() => dependency.LoadPuzzle());
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 
 namespace Assets.BlockPuzzle.Proggression
 {
@@ -18,7 +17,7 @@ namespace Assets.BlockPuzzle.Proggression
         public PlayerProgresion(PlayerProgressionDependency dependency)
         {
             _playerExperience = new ValueHandler(0, dependency.MaxExp, dependency.ExpGUID);
-            _playerLevel = new ValueHandler(0, dependency.MaxLevel, dependency.LevelGUID);
+            _playerLevel = new ValueHandler(1, dependency.MaxLevel, dependency.LevelGUID);
         }
 
         public void AddExp(float exp)
