@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.BlockPuzzle
+namespace Assets.BlockPuzzle.SaveLoad
 {
     public static class SaveService
     {

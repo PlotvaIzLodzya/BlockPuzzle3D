@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 900ab6df-0797-45bb-8f08-c77f2d28b9de
+  <Experience>k__BackingField: 20
   <Name>k__BackingField: Galileo
   _angleStep: 45
   _stepTime: 0.2

@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: <Name>k__BackingField
       value: Cells 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: <Experience>k__BackingField
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3451614839885885213, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8

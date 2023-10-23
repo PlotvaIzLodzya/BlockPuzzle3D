@@ -1,61 +1,19 @@
 ﻿using Assets.BlockPuzzle.Controll;
 using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.HUD;
+using Assets.BlockPuzzle.Proggression;
 using Assets.BlockPuzzle.Puzzles;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
-    [Serializable]
-    public class PuzzleFactory
-    {
-        [SerializeField] private Puzzle[] _puzzlePrefabs;
-
-        public IEnumerable<Puzzle> GetPuzzles<TPuzzle>() where TPuzzle : Puzzle
-        {
-            var puzzles = new List<Puzzle>();
-
-            foreach (var puzzle in _puzzlePrefabs)
-            {
-                if (puzzle is TPuzzle)
-                    puzzles.Add(puzzle);
-            }
-
-            return puzzles;
-        }
-
-        public Puzzle GetRandomPuzzle<TPuzzle> () where TPuzzle : Puzzle
-        {
-            var puzzles = GetPuzzles<TPuzzle>();
-
-            var index = UnityEngine.Random.Range(0, puzzles.Count());
-
-            return puzzles.ElementAt(index);
-        }
-
-        public Puzzle GetPuzzle(int index)
-        {
-            return _puzzlePrefabs[index];
-        }
-
-        public bool TryGetPuzzle(string guid, out Puzzle puzzle)
-        {
-            puzzle = GetPuzzle(guid);
-
-            return puzzle != null;
-        }
-
-        public Puzzle GetPuzzle(string guid)
-        {
-            return _puzzlePrefabs.First(puzzle => puzzle.GUID.Equals(guid));
-        }
-    }
-
     public class Game: MonoBehaviour
     {
+        [SerializeField, ReadOnly] private string _levelGUID;
+        [SerializeField, ReadOnly] private string _expGuid;
+
         [SerializeField] private PuzzleFactory _puzzleFactory;
         [SerializeField] private GameUI _gameUI;
         [SerializeField] private Masks _masks;
@@ -65,17 +23,29 @@ namespace Assets.BlockPuzzle
 
         private IComplition _levelComplition;
         private Puzzle _curentPuzzle;
+        private PlayerProgresion _playerProgression;
 
         public static MonoBehaviour CoroutineHandler { get; private set; }
 
         private void Awake()
         {
+            var progressionDependency = new PlayerProgressionDependency(_expGuid, _levelGUID, 80, 17);
+            _playerProgression = new PlayerProgresion(progressionDependency);
+
             if(CoroutineHandler == null)
                 CoroutineHandler = this;
 
             _grab.Construct(_masks);
 
             ConstructUI();
+        }
+
+        [ContextMenu(nameof(Generate))]
+        public void Generate()
+        {
+            _levelGUID = System.Guid.NewGuid().ToString();
+            _expGuid = System.Guid.NewGuid().ToString();
+            EditorUtility.SetDirty(this);
         }
 
         private void ConstructUI()
@@ -86,7 +56,7 @@ namespace Assets.BlockPuzzle
 
             var puzzleViewDependency = new PuzzleViewDependency(letterDependency, squareDependency, puzzle49Dependency);
 
-            _gameUI.Construct(puzzleViewDependency);
+            _gameUI.Construct(puzzleViewDependency, _playerProgression);
         }
 
         private IEnumerable<StartPuzzleDependency> CreateDependency<TPuzzle>() where TPuzzle: Puzzle
@@ -115,7 +85,12 @@ namespace Assets.BlockPuzzle
             var puzzle = _puzzleFactory.GetPuzzle(guid);
             _curentPuzzle = puzzle;
 
-            var createPuzzle = Instantiate(puzzle);
+            CreatePuzzle(puzzle);
+        }
+
+        private void CreatePuzzle(Puzzle puzzlePrefab)
+        {
+            var createPuzzle = Instantiate(puzzlePrefab);
 
             var puzzleDependency = new PuzzleDependency(_masks);
             _levelComplition = createPuzzle.Construct(puzzleDependency);
@@ -139,9 +114,15 @@ namespace Assets.BlockPuzzle
         {
             if(_levelComplition.IsCompleted)
             {
-                _levelComplition.OnChange -= OnLevelProgress;
-                _gameUI.OnLevelEnd();
+                OnLevelComplete();
             }
+        }
+
+        public void OnLevelComplete()
+        {
+            _levelComplition.OnChange -= OnLevelProgress;
+            _playerProgression.AddExp(_curentPuzzle.Experience);
+            _gameUI.OnLevelEnd();
         }
     }
 }

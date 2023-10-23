@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: deb145bb-3588-4710-88c9-5999bd357173
+  <Experience>k__BackingField: 20
   <Name>k__BackingField: Triangle
   _angleStep: 45
   _stepTime: 0.2
