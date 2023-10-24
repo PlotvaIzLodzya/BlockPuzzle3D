@@ -1,4 +1,5 @@
 ﻿using Assets.BlockPuzzle.Proggression;
+using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace Assets.BlockPuzzle.HUD
 
         private IEnumerator Animating()
         {
-            float time = 2f;
+            float time = 3f;
             float speed = _progression.MaxExperience / time;
             float targetValue = _progression.Experience;
 
@@ -46,6 +47,9 @@ namespace Assets.BlockPuzzle.HUD
 
             if(targetValue < _slider.value)
             {
+                var duration = (_progression.MaxExperience - _slider.value) / speed + 0.1f;
+                _level.rectTransform.DOShakePosition(duration, strength: 10f, vibrato: 20, randomness: 15, snapping: true, fadeOut: false, ShakeRandomnessMode.Full);
+
                 while (_slider.value < _progression.MaxExperience)
                 {
                     _slider.value = Mathf.MoveTowards(_slider.value, _progression.MaxExperience, speed*Time.deltaTime);
@@ -74,11 +78,12 @@ namespace Assets.BlockPuzzle.HUD
             _slider.maxValue = _progression.MaxExperience;
             _slider.value = _progression.Experience;
 
-            UpdateRank();
+            _level.text = $"{Ranks.GetRank(_progression.Level)}";
         }
 
         private void UpdateRank()
         {
+            _level.rectTransform.DOScale(endValue: 1.2f, duration: 0.2f).OnComplete(() => _level.rectTransform.DOScale(endValue: 1f, duration: 0.2f));
             _level.text = $"{Ranks.GetRank(_progression.Level)}";
         }
     }
