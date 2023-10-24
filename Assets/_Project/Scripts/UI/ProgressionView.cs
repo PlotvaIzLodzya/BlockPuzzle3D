@@ -55,7 +55,7 @@ namespace Assets.BlockPuzzle.HUD
 
                 _slider.value = 0;
 
-                _level.text = $"{Ranks.GetRank(_progression.Level)}";
+                UpdateRank();
             }
 
 
@@ -74,6 +74,11 @@ namespace Assets.BlockPuzzle.HUD
             _slider.maxValue = _progression.MaxExperience;
             _slider.value = _progression.Experience;
 
+            UpdateRank();
+        }
+
+        private void UpdateRank()
+        {
             _level.text = $"{Ranks.GetRank(_progression.Level)}";
         }
     }
