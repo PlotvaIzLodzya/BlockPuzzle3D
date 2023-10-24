@@ -38,18 +38,30 @@ namespace Assets.BlockPuzzle.HUD
 
         private IEnumerator Animating()
         {
-            float time = 0.75f;
-            float elapsedTime = 0;
+            float time = 2f;
+            float speed = _progression.MaxExperience / time;
             float targetValue = _progression.Experience;
-            float startValue = _slider.value;
 
             yield return new WaitForSeconds(0.2f);
 
-            while(elapsedTime< time)
+            if(targetValue < _slider.value)
             {
-                elapsedTime += Time.deltaTime;
+                while (_slider.value < _progression.MaxExperience)
+                {
+                    _slider.value = Mathf.MoveTowards(_slider.value, _progression.MaxExperience, speed*Time.deltaTime);
 
-                _slider.value = Mathf.Lerp(startValue, targetValue, elapsedTime/time);
+                    yield return null;
+                }
+
+                _slider.value = 0;
+
+                _level.text = $"{Ranks.GetRank(_progression.Level)}";
+            }
+
+
+            while(_slider.value < targetValue)
+            {
+                _slider.value = Mathf.MoveTowards(_slider.value, targetValue, speed * Time.deltaTime);
 
                 yield return null;
             }

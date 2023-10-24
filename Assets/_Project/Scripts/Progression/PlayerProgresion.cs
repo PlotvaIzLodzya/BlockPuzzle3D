@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Assets.BlockPuzzle.Proggression
 {
@@ -22,11 +23,13 @@ namespace Assets.BlockPuzzle.Proggression
 
         public void AddExp(float exp)
         {
+            var totalExp = _playerExperience.Value + exp;
             _playerExperience.Increase(exp);
 
             if(_playerExperience.Value >= _playerExperience.MaxValue)
             {
-                var additionalExp = _playerExperience.Value - _playerExperience.MaxValue;
+                var additionalExp = totalExp - _playerExperience.MaxValue;
+
                 LevelUp(additionalExp);
             }
 

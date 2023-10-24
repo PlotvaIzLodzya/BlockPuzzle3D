@@ -40,6 +40,12 @@ namespace Assets.BlockPuzzle
             ConstructUI();
         }
 
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.T))
+                OnLevelComplete();
+        }
+
         [ContextMenu(nameof(Generate))]
         public void Generate()
         {
