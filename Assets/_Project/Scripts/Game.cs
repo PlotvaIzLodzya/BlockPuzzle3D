@@ -90,7 +90,6 @@ namespace Assets.BlockPuzzle
 
             var puzzle = _puzzleFactory.GetPuzzle(guid);
 
-
             CreatePuzzle(puzzle);
         }
 
@@ -128,7 +127,10 @@ namespace Assets.BlockPuzzle
         public void OnLevelComplete()
         {
             _levelComplition.OnChange -= OnLevelProgress;
-            _playerProgression.AddExp(_curentPuzzle.Experience);
+
+            if(_curentPuzzle.WasCompletedAlready == false)
+                _playerProgression.AddExp(_curentPuzzle.Experience);
+
             _gameUI.OnLevelEnd();
         }
     }

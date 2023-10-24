@@ -21,6 +21,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public int ShapesCount => _shape.Length;
         public bool IsCompleted => SaveService.HasSave(GUID);
+        public bool WasCompletedAlready { get; private set; }
 
         public void GetFromDependencieFromChildren()
         {
@@ -31,6 +32,7 @@ namespace Assets.BlockPuzzle.Puzzles
         public IComplition Construct(PuzzleDependency puzzleDependency)
         {
             GetFromDependencieFromChildren();
+            WasCompletedAlready = IsCompleted;
 
             foreach (IShape shape in _shape)
             {
