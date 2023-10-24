@@ -1654,7 +1654,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: c8577ab3-457c-47e3-a12c-ab85a5878e76
   <Experience>k__BackingField: 10
-  <Name>k__BackingField: A
+  <Name>k__BackingField:
+    EN: A
+    RU: A
+    TR: A
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

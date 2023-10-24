@@ -83,17 +83,18 @@ namespace Assets.BlockPuzzle
                 _curentPuzzle.Destroy();
 
             var puzzle = _puzzleFactory.GetPuzzle(guid);
-            _curentPuzzle = puzzle;
+
 
             CreatePuzzle(puzzle);
         }
 
         private void CreatePuzzle(Puzzle puzzlePrefab)
         {
-            var createPuzzle = Instantiate(puzzlePrefab);
+            var createdPuzzle = Instantiate(puzzlePrefab);
 
             var puzzleDependency = new PuzzleDependency(_masks);
-            _levelComplition = createPuzzle.Construct(puzzleDependency);
+            _levelComplition = createdPuzzle.Construct(puzzleDependency);
+            _curentPuzzle = createdPuzzle;
             _levelComplition.OnChange += OnLevelProgress;
             _gameUI.HideMainMenu();
         }

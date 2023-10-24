@@ -20,6 +20,18 @@ PrefabInstance:
       propertyPath: <Name>k__BackingField
       value: Cells 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5931673201918307019, guid: 340fe67f1265a664ebd117f4830de783, type: 3}
+      propertyPath: <Name>k__BackingField.EN
+      value: Cells 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5931673201918307019, guid: 340fe67f1265a664ebd117f4830de783, type: 3}
+      propertyPath: <Name>k__BackingField.RU
+      value: "\u041A\u043B\u0435\u0442\u043A\u0438 8"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5931673201918307019, guid: 340fe67f1265a664ebd117f4830de783, type: 3}
+      propertyPath: <Name>k__BackingField.TR
+      value: "H\xFCcreler 8"
+      objectReference: {fileID: 0}
     - target: {fileID: 7745005011463572565, guid: 340fe67f1265a664ebd117f4830de783, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8

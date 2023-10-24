@@ -1,5 +1,6 @@
 ﻿using Assets.BlockPuzzle.Complition;
 using Assets.BlockPuzzle.Dependency;
+using Assets.BlockPuzzle.Localization;
 using Assets.BlockPuzzle.SaveLoad;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Assets.BlockPuzzle.Puzzles
     public class Puzzle : GUIDObject
     {
         [field: SerializeField] public float Experience { get; private set; }
-        [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public InGameText Name { get; private set; }
 
         [SerializeField] private float _angleStep = 45;
         [SerializeField] private float _stepTime = 0.2f;

@@ -16,6 +16,18 @@ PrefabInstance:
       propertyPath: <Name>k__BackingField
       value: Cells 13
       objectReference: {fileID: 0}
+    - target: {fileID: 280898998486680265, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
+      propertyPath: <Name>k__BackingField.EN
+      value: Cells 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 280898998486680265, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
+      propertyPath: <Name>k__BackingField.RU
+      value: "\u041A\u043B\u0435\u0442\u043A\u0438 11"
+      objectReference: {fileID: 0}
+    - target: {fileID: 280898998486680265, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
+      propertyPath: <Name>k__BackingField.TR
+      value: "H\xFCcreler 11"
+      objectReference: {fileID: 0}
     - target: {fileID: 1740217551202046641, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
       propertyPath: m_Name
       value: 49Puzzle Variant 11

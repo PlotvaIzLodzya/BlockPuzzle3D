@@ -791,7 +791,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 7eebe063-c36d-4a8a-a71d-78b86c86e381
   <Experience>k__BackingField: 20
-  <Name>k__BackingField: Tangram
+  <Name>k__BackingField:
+    EN: Tangram
+    RU: "\u0422\u0430\u043D\u0433\u0440\u0430\u043C"
+    TR: Tangram
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

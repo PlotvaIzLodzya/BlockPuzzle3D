@@ -1,5 +1,4 @@
-﻿using Assets.BlockPuzzle.Localization;
-using Assets.BlockPuzzle.Proggression;
+﻿using Assets.BlockPuzzle.Proggression;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -7,28 +6,6 @@ using UnityEngine.UI;
 
 namespace Assets.BlockPuzzle.HUD
 {
-    public static class Ranks
-    {
-        public static string GetRank(int level)
-        {
-            var rank = InGameTexts.Rookie;
-
-            rank = level switch
-            {
-                1 => InGameTexts.Rookie,
-                2 => InGameTexts.Beginner,
-                3 => InGameTexts.Experienced,
-                4 => InGameTexts.Expert,
-                5 => InGameTexts.Professional,
-                6 => InGameTexts.BigBrain,
-                7 => InGameTexts.MegaMind,
-                _ => rank
-            };
-
-            return rank;
-        }
-    }
-
     public class ProgressionView : Panel
     {
         [SerializeField] private Slider _slider;
@@ -84,7 +61,7 @@ namespace Assets.BlockPuzzle.HUD
         {
             _slider.maxValue = _progression.MaxExperience;
             _slider.value = _progression.Experience;
-            Debug.Log(_progression.Level);
+
             _level.text = $"{Ranks.GetRank(_progression.Level)}";
         }
     }

@@ -64,6 +64,18 @@ PrefabInstance:
       propertyPath: <Name>k__BackingField
       value: Cells 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3948906613656721897, guid: 28200dedbc42f6c42a7c478a0556f151, type: 3}
+      propertyPath: <Name>k__BackingField.EN
+      value: Cells 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948906613656721897, guid: 28200dedbc42f6c42a7c478a0556f151, type: 3}
+      propertyPath: <Name>k__BackingField.RU
+      value: "\u041A\u043B\u0435\u0442\u043A\u0438 9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948906613656721897, guid: 28200dedbc42f6c42a7c478a0556f151, type: 3}
+      propertyPath: <Name>k__BackingField.TR
+      value: "H\xFCcreler 9"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

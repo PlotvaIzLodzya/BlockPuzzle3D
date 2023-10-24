@@ -53,10 +53,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: b2d64d26-52bd-4dd4-9513-792cb1d69cc7
   <Experience>k__BackingField: 20
-  <Name>k__BackingField: Circle
+  <Name>k__BackingField:
+    EN: Circle
+    RU: "\u041A\u0440\u0443\u0433"
+    TR: Daire
   _angleStep: 15
   _stepTime: 0.2
-  _rotationTime: 0.06
+  _rotationTime: 0.02
   _stepSize: 0.2
 --- !u!1 &981072980147790637
 GameObject:

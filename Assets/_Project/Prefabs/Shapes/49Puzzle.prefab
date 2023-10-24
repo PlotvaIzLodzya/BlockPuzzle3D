@@ -1058,7 +1058,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 7fbd2540-909f-4bd9-ae31-e1f91db45905
   <Experience>k__BackingField: 40
-  <Name>k__BackingField: Cells 1
+  <Name>k__BackingField:
+    EN: Cells
+    RU: "\u041A\u043B\u0435\u0442\u043A\u0438"
+    TR: "H\xFCcreler"
   _angleStep: 45
   _stepTime: 0.2
   _rotationTime: 0.2

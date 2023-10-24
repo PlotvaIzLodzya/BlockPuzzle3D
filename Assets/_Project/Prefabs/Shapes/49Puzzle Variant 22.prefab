@@ -21,6 +21,18 @@ PrefabInstance:
       value: Cells 19
       objectReference: {fileID: 0}
     - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: <Name>k__BackingField.EN
+      value: Cells 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: <Name>k__BackingField.RU
+      value: "\u041A\u043B\u0435\u0442\u043A\u0438 17"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: <Name>k__BackingField.TR
+      value: "H\xFCcreler 17"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
       propertyPath: <Experience>k__BackingField
       value: 40
       objectReference: {fileID: 0}

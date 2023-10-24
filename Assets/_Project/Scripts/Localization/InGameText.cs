@@ -1,13 +1,16 @@
 ﻿using Assets.BlockPuzzle.HUD;
+using System;
+using UnityEngine;
 using static Cinemachine.DocumentationSortingAttribute;
 
 namespace Assets.BlockPuzzle.Localization
 {
+    [Serializable]
     public struct InGameText
     {
-        public string EN { get; private set; }
-        public string RU { get; private set; }
-        public string TR { get; private set; }
+        public string EN;
+        public string RU;
+        public string TR;
 
         public string TranslatedLine => GetCurrentTranslate();
 

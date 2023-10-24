@@ -11,7 +11,7 @@ namespace Assets.BlockPuzzle.HUD
 
         public StartPuzzleDependency(Puzzle puzzle, Action loadPuzzle)
         {
-            PuzzleName = puzzle.Name;
+            PuzzleName = puzzle.Name.TranslatedLine;
             IsCompleted = puzzle.IsCompleted;
             LoadPuzzle = loadPuzzle;
         }
