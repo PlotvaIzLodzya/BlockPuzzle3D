@@ -4,6 +4,7 @@ namespace Assets.BlockPuzzle.Controll
 {
     interface IGrab
     {
+        public bool CanBeGrabbed { get; }
         public Transform transform { get; }
         public bool CanPlace();
         public void Grab();

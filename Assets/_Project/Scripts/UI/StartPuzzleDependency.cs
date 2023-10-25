@@ -9,11 +9,14 @@ namespace Assets.BlockPuzzle.HUD
         public bool IsCompleted { get;private set; }
         public Action LoadPuzzle { get; private set; }
 
-        public StartPuzzleDependency(Puzzle puzzle, Action loadPuzzle)
+        public Difficulty Difficulty { get; private set; }
+
+        public StartPuzzleDependency(Puzzle puzzle, Action loadPuzzle, Difficulty difficulty)
         {
             PuzzleName = puzzle.Name.TranslatedLine;
             IsCompleted = puzzle.IsCompleted;
             LoadPuzzle = loadPuzzle;
+            Difficulty = difficulty;
         }
     }
 }

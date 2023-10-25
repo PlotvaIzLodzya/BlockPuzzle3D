@@ -5,9 +5,14 @@ namespace Assets.BlockPuzzle.Puzzles
 {
     public class StartShape : MonoBehaviour, IShape
     {
-        public bool Placed {get; private set;} = true;
+        public bool Placed {get; private set;}
 
         public void Construct(PuzzleDependency dependency)
+        {
+            Placed = true;
+        }
+
+        public void OnComplete()
         {
             
         }

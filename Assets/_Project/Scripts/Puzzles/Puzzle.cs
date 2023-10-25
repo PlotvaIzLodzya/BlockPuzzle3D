@@ -6,6 +6,13 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
+    public enum Difficulty
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+
     public class Puzzle : GUIDObject
     {
         [field: SerializeField] public float Experience { get; private set; }
@@ -16,16 +23,16 @@ namespace Assets.BlockPuzzle.Puzzles
         [SerializeField] private float _rotationTime = 0.2f;
         [SerializeField] private float _stepSize = 0.2f;
 
-        private IShape[] _shape;
+        private IShape[] _shapes;
         private LevelComplition _levelComplition;
 
-        public int ShapesCount => _shape.Length;
+        public int ShapesCount => _shapes.Length;
         public bool IsCompleted => SaveService.HasSave(GUID);
         public bool WasCompletedAlready { get; private set; }
 
         public void GetFromDependencieFromChildren()
         {
-            _shape= GetComponentsInChildren<IShape>();
+            _shapes= GetComponentsInChildren<IShape>();
             _levelComplition = GetComponentInChildren<LevelComplition>();
         }
 
@@ -34,7 +41,7 @@ namespace Assets.BlockPuzzle.Puzzles
             GetFromDependencieFromChildren();
             WasCompletedAlready = IsCompleted;
 
-            foreach (IShape shape in _shape)
+            foreach (IShape shape in _shapes)
             {
                 puzzleDependency.SetStepAngle(_angleStep)
                                 .SetStepTime(_stepTime)
@@ -44,14 +51,27 @@ namespace Assets.BlockPuzzle.Puzzles
                 shape.Construct(puzzleDependency);
             }
             
-            _levelComplition.Construct(_shape.Length, GUID);
-
+            _levelComplition.Construct(_shapes.Length, GUID);
+            _levelComplition.OnComplete += OnComplition;
             return _levelComplition;
+        }
+
+        private void OnDestroy()
+        {
+            _levelComplition.OnComplete -= OnComplition;
         }
 
         public void Destroy()
         {
             Destroy(gameObject);
+        }
+
+        private void OnComplition()
+        {
+            foreach (var shape in _shapes)
+            {
+                shape.OnComplete();
+            }
         }
     }
 }

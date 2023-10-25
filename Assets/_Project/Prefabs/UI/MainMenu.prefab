@@ -353,7 +353,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2925723811016493719}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.5
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -602,6 +602,8 @@ MonoBehaviour:
   _letterPuzzleList: {fileID: 8367150140635603984}
   _squarePuzzleList: {fileID: 1813317227788902337}
   _49PuzzleList: {fileID: 2055937939118382188}
+  _menuButton: {fileID: 0}
+  _closeButton: {fileID: 0}
 --- !u!1 &5754862784695669851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1015,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aef93603a54e72488d8ed21eeaaf2e0, type: 3}
+--- !u!114 &1285278639905336201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2043211766069551832, guid: 6aef93603a54e72488d8ed21eeaaf2e0, type: 3}
+  m_PrefabInstance: {fileID: 976375515043400017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1930767104016647531 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1677518465484786746, guid: 6aef93603a54e72488d8ed21eeaaf2e0, type: 3}
@@ -1147,6 +1160,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3536305038776004082, guid: c1700a4fa745c2f4793b6bb5ff15bc47, type: 3}
   m_PrefabInstance: {fileID: 1698752784294261801}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3286810193482102585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4183341425744839440, guid: c1700a4fa745c2f4793b6bb5ff15bc47, type: 3}
+  m_PrefabInstance: {fileID: 1698752784294261801}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7471112729430873491 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8087787467172798906, guid: c1700a4fa745c2f4793b6bb5ff15bc47, type: 3}
@@ -1258,6 +1282,10 @@ PrefabInstance:
       propertyPath: _progression
       value: 
       objectReference: {fileID: 5195557637599882106}
+    - target: {fileID: 5814327857796900181, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
+      propertyPath: _difficultyView
+      value: 
+      objectReference: {fileID: 155925186740685264}
     - target: {fileID: 8833583062749960459, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1424,6 +1452,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e25146c72bf9b794c9343bfbcf1679bc, type: 3}
+--- !u!114 &155925186740685264 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3013887669579184379, guid: e25146c72bf9b794c9343bfbcf1679bc, type: 3}
+  m_PrefabInstance: {fileID: 3169003615688159531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &663358794170853170 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2508002174452766233, guid: e25146c72bf9b794c9343bfbcf1679bc, type: 3}
@@ -1536,6 +1575,10 @@ PrefabInstance:
       propertyPath: _progression
       value: 
       objectReference: {fileID: 6621869356394875171}
+    - target: {fileID: 5814327857796900181, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
+      propertyPath: _difficultyView
+      value: 
+      objectReference: {fileID: 1285278639905336201}
     - target: {fileID: 8833583062749960459, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1681,6 +1724,10 @@ PrefabInstance:
       propertyPath: _progression
       value: 
       objectReference: {fileID: 7471112729430873491}
+    - target: {fileID: 5814327857796900181, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
+      propertyPath: _difficultyView
+      value: 
+      objectReference: {fileID: 3286810193482102585}
     - target: {fileID: 8833583062749960459, guid: 9d82afbef9bc01f4fba4982fe7496ad7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

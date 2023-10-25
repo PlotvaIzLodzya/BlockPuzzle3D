@@ -46,7 +46,7 @@ namespace Assets.BlockPuzzle.Controll
             if (Input.GetMouseButtonDown(0) && _currentGrab == null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrab grab))
+                if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrab grab) && grab.CanBeGrabbed)
                 {
                     _currentGrab = grab;
                     _currentGrab.Grab();

@@ -14,6 +14,8 @@ namespace Assets.BlockPuzzle.Puzzles
         public bool Placed { get; }
 
         public void Construct(PuzzleDependency dependency);
+
+        public void OnComplete();
     }
 
     public class Shape : MonoBehaviour, IGrab, IHighlightable, IShape
@@ -33,9 +35,11 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public bool IsRequireHighlight { get;private set; }
         public bool Placed { get; private set; }
+        public bool CanBeGrabbed { get; private set; }
 
         public void Construct(PuzzleDependency puzzleDependency)
         {
+            CanBeGrabbed = true;
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _stepSize = puzzleDependency.StepSize;
             _offset = transform.position - vectorInt;
@@ -82,6 +86,12 @@ namespace Assets.BlockPuzzle.Puzzles
             gameObject.AddComponent<GlowObject>();
 
             EditorUtility.SetDirty(gameObject);
+        }
+
+        public void OnComplete()
+        {
+            IsRequireHighlight = false;
+            CanBeGrabbed = false;
         }
 
         public void Return()

@@ -1,8 +1,10 @@
-﻿using Assets.BlockPuzzle.Controll;
+﻿using Agava.YandexGames;
+using Assets.BlockPuzzle.Controll;
 using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.HUD;
 using Assets.BlockPuzzle.Proggression;
 using Assets.BlockPuzzle.Puzzles;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -27,8 +29,12 @@ namespace Assets.BlockPuzzle
 
         public static MonoBehaviour CoroutineHandler { get; private set; }
 
-        private void Awake()
+        private IEnumerator Start()
         {
+#if (!UNITY_EDITOR)
+            yield return YandexGamesSdk.Initialize();
+#endif
+
             var progressionDependency = new PlayerProgressionDependency(_expGuid, _levelGUID, 70, 17);
             _playerProgression = new PlayerProgresion(progressionDependency);
 
@@ -36,8 +42,9 @@ namespace Assets.BlockPuzzle
                 CoroutineHandler = this;
 
             _grab.Construct(_masks);
-
             ConstructUI();
+
+            yield return null;
         }
 
         private void Update()
@@ -56,16 +63,16 @@ namespace Assets.BlockPuzzle
 
         private void ConstructUI()
         {
-            var letterDependency = CreateDependency<LetterPuzzle>();
-            var squareDependency = CreateDependency<SquarePuzzle>();
-            var puzzle49Dependency = CreateDependency<Puzzle49>();
+            var letterDependency = CreateDependency<LetterPuzzle>(Difficulty.Easy);
+            var squareDependency = CreateDependency<SquarePuzzle>(Difficulty.Medium);
+            var puzzle49Dependency = CreateDependency<Puzzle49>(Difficulty.Hard);
 
             var puzzleViewDependency = new PuzzleViewDependency(letterDependency, squareDependency, puzzle49Dependency);
 
             _gameUI.Construct(puzzleViewDependency, _playerProgression);
         }
 
-        private IEnumerable<StartPuzzleDependency> CreateDependency<TPuzzle>() where TPuzzle: Puzzle
+        private IEnumerable<StartPuzzleDependency> CreateDependency<TPuzzle>(Difficulty difficulty) where TPuzzle: Puzzle
         {
             var dependencyList = new List<StartPuzzleDependency>();
 
@@ -76,7 +83,9 @@ namespace Assets.BlockPuzzle
                 dependencyList.Add(new StartPuzzleDependency
                     (
                         puzzle,
-                        () => CreatePuzzle(puzzle.GUID))
+                        () => CreatePuzzle(puzzle.GUID),
+                        difficulty
+                    )
                     );
             }
 

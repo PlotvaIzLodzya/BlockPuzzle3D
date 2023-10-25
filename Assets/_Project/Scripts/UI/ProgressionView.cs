@@ -39,7 +39,7 @@ namespace Assets.BlockPuzzle.HUD
 
         private IEnumerator Animating()
         {
-            float time = 3f;
+            float time = 5f;
             float speed = _progression.MaxExperience / time;
             float targetValue = _progression.Experience;
 

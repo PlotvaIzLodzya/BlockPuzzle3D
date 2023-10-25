@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Assets.BlockPuzzle.Localization;
+using Assets.BlockPuzzle.Puzzles;
+using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle.HUD
@@ -8,9 +11,11 @@ namespace Assets.BlockPuzzle.HUD
     {
         [SerializeField] private StartPuzzleView _startPuzzleViewPrefab;
         [SerializeField] private PuzzleBlockProgression _progression;
+        [SerializeField] private TMP_Text _difficultyView;
 
         private int _completed;
         private int _total;
+        private Difficulty _difficulty;
 
         public void Construct(IEnumerable<StartPuzzleDependency> dependencies)
         {
@@ -24,8 +29,19 @@ namespace Assets.BlockPuzzle.HUD
 
                 if (dependency.IsCompleted)
                     completed++;
+
+                _difficulty = dependency.Difficulty;
             }
 
+            var difficulty = _difficulty switch
+            {
+                Difficulty.Easy => InGameTexts.Easy,
+                Difficulty.Medium => InGameTexts.Medium,
+                Difficulty.Hard => InGameTexts.Hard,
+                _ => InGameTexts.Hard,
+            };
+
+            _difficultyView.text = $"{difficulty}";
             _completed = completed;
 
             Show();

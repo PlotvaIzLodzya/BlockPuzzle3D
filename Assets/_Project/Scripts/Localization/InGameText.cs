@@ -1,4 +1,5 @@
-﻿using Assets.BlockPuzzle.HUD;
+﻿using Agava.YandexGames;
+using Assets.BlockPuzzle.HUD;
 using System;
 using UnityEngine;
 using static Cinemachine.DocumentationSortingAttribute;
@@ -23,7 +24,11 @@ namespace Assets.BlockPuzzle.Localization
 
         public string GetCurrentTranslate()
         {
-            var lang = "en";
+            var lang = "ru";
+
+#if (!UNITY_EDITOR)
+    lang = YandexGamesSdk.Environment.i18n.lang;
+#endif
 
             var line = lang switch
             {

@@ -17,6 +17,7 @@ namespace Assets.BlockPuzzle.Complition
 
         public bool IsCompleted => _shapes.Count >= _totalShapeCount;
         public event Action OnChange;
+        public event Action OnComplete;
 
         public void Construct(int totalShapeCount, string guid)
         {
@@ -70,7 +71,10 @@ namespace Assets.BlockPuzzle.Complition
             OnChange?.Invoke();
 
             if (IsCompleted)
+            {
                 SaveService.Save(_guid, 0);
+                OnComplete?.Invoke();
+            }
         }
     }
 }

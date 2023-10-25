@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.agava.yandexgames": {
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#15.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ac2abaee4101c1c2c7b88cb0865c730b7d533047"
+    },
+    "com.agava.yandexmetrica": {
+      "version": "https://github.com/forcepusher/com.agava.yandexmetrica.git#1.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5c1236e04529a7ee127f9fd0e187737e3db2e3c6"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

@@ -402,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progression: {fileID: 2400105580403610041}
+  _complete: {fileID: 3500140660396651647}
 --- !u!1 &6857303069001442709
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +491,7 @@ GameObject:
   - component: {fileID: 6127650159034810097}
   - component: {fileID: 3500140660396651647}
   m_Layer: 5
-  m_Name: Win
+  m_Name: Complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
