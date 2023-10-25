@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 280898998486680265, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
+      propertyPath: GUID
+      value: a28857fd-169c-4be5-be7b-e0e5edad62c4
+      objectReference: {fileID: 0}
+    - target: {fileID: 280898998486680265, guid: 292401ffccfc42842bf9996c3147558d, type: 3}
       propertyPath: <GUID>k__BackingField
       value: 33ce9a09-bdc5-451d-b6ab-6f5d19731b1b
       objectReference: {fileID: 0}

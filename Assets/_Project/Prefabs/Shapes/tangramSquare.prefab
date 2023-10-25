@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: 7eebe063-c36d-4a8a-a71d-78b86c86e381
+  GUID: d89bbc4e-0062-4acf-8768-24dc6bc744e3
   <Experience>k__BackingField: 20
   <Name>k__BackingField:
     EN: Tangram

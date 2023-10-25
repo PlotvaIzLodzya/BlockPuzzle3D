@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f25fbf3abe3fa1469451d818bb16de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: 8405af3f-d3ab-4a7b-b647-23fa20703dbd
+  GUID: 530c4116-ba20-440e-91ad-5c17ada5760d
   <Experience>k__BackingField: 10
   <Name>k__BackingField:
     EN: M

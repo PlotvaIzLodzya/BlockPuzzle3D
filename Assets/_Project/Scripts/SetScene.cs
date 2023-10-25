@@ -1,6 +1,5 @@
 ﻿using Assets.BlockPuzzle.Complition;
 using Assets.BlockPuzzle.Puzzles;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
@@ -40,7 +39,9 @@ namespace Assets.BlockPuzzle
             foreach (var puzzle in puzzles)
             {
                 puzzle.GetFromDependencieFromChildren();
-                EditorUtility.SetDirty(puzzle.gameObject);
+#if(UNITY_EDITOR)
+                UnityEditor.EditorUtility.SetDirty(puzzle.gameObject);
+#endif
             }
         }
 

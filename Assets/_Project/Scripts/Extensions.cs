@@ -17,6 +17,8 @@ namespace Assets.BlockPuzzle
         public static string ColorHexFromUnityColor(this Color unityColor) => $"#{ColorUtility.ToHtmlStringRGBA(unityColor)}";
     }
 
+#if(UNITY_EDITOR)
+
     public class ReadOnlyAttribute : PropertyAttribute
     {
 
@@ -40,4 +42,5 @@ namespace Assets.BlockPuzzle
             GUI.enabled = true;
         }
     }
+#endif
 }

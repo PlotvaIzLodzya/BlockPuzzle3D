@@ -7,15 +7,20 @@ using Assets.BlockPuzzle.Puzzles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle
 {
     public class Game: MonoBehaviour
     {
-        [SerializeField, ReadOnly] private string _levelGUID;
-        [SerializeField, ReadOnly] private string _expGuid;
+#if(UNITY_EDITOR)
+        [ReadOnly]
+#endif
+        [SerializeField] private string _levelGUID;
+#if (UNITY_EDITOR)
+        [ReadOnly]
+#endif
+        [SerializeField] private string _expGuid;
 
         [SerializeField] private PuzzleFactory _puzzleFactory;
         [SerializeField] private GameUI _gameUI;
@@ -56,12 +61,20 @@ namespace Assets.BlockPuzzle
                 OnLevelComplete();
         }
 
-        [ContextMenu(nameof(Generate))]
-        public void Generate()
+        [ContextMenu(nameof(GenerateGUID))]
+        public void GenerateGUID()
         {
+#if(UNITY_EDITOR)
             _levelGUID = System.Guid.NewGuid().ToString();
             _expGuid = System.Guid.NewGuid().ToString();
-            EditorUtility.SetDirty(this);
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+        }
+
+        [ContextMenu(nameof(SetScene))]
+        public void SetScene()
+        {
+            _setScene.Set(_puzzleMaterials);
         }
 
         private void ConstructUI()
@@ -83,13 +96,14 @@ namespace Assets.BlockPuzzle
 
             foreach (var puzzle in puzzles)
             {
-                dependencyList.Add(new StartPuzzleDependency
+                var dependency = new StartPuzzleDependency
                     (
                         puzzle,
                         () => CreatePuzzle(puzzle.GUID),
                         difficulty
-                    )
                     );
+
+                dependencyList.Add(dependency);
             }
 
             return dependencyList;
@@ -102,10 +116,22 @@ namespace Assets.BlockPuzzle
 
             var puzzle = _puzzleFactory.GetPuzzle(guid);
 
-            CreatePuzzle(puzzle);
+            StartGame(puzzle);
         }
 
-        private void CreatePuzzle(Puzzle puzzlePrefab)
+        private void StartGame(Puzzle puzzlePrefab)
+        {
+
+            CreatePuzzle(puzzlePrefab);
+
+            _gameUI.HideMainMenu();
+
+#if(!UNITY_EDITOR)
+            InterstitialAd.Show();
+#endif
+        }
+
+        public void CreatePuzzle(Puzzle puzzlePrefab)
         {
             var createdPuzzle = Instantiate(puzzlePrefab);
 
@@ -113,19 +139,12 @@ namespace Assets.BlockPuzzle
             _levelComplition = createdPuzzle.Construct(puzzleDependency);
             _curentPuzzle = createdPuzzle;
             _levelComplition.OnChange += OnLevelProgress;
-            _gameUI.HideMainMenu();
         }
 
         private void OnDestroy()
         {
             if(_levelComplition != null)
                 _levelComplition.OnChange -= OnLevelProgress;
-        }
-
-        [ContextMenu(nameof(SetScene))]
-        public void SetScene()
-        {
-            _setScene.Set(_puzzleMaterials);
         }
 
         private void OnLevelProgress()

@@ -4,7 +4,6 @@ using Assets.BlockPuzzle.View;
 using DG.Tweening;
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
@@ -67,6 +66,7 @@ namespace Assets.BlockPuzzle.Puzzles
         [ContextMenu(nameof(DarkMagic))]
         private void DarkMagic()
         {
+#if(UNITY_EDITOR)
             var rb = gameObject.AddComponent<Rigidbody>();
 
             rb.isKinematic = true;
@@ -96,7 +96,8 @@ namespace Assets.BlockPuzzle.Puzzles
 
             gameObject.AddComponent<GlowObject>();
 
-            EditorUtility.SetDirty(gameObject);
+            UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         public void OnComplete()

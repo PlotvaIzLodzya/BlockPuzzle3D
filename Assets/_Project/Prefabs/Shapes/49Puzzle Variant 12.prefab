@@ -13,6 +13,10 @@ PrefabInstance:
       value: 49Puzzle Variant 12
       objectReference: {fileID: 0}
     - target: {fileID: 6004704958433032647, guid: f2fc5ea12953f5d438f9691fde139e39, type: 3}
+      propertyPath: GUID
+      value: 93d62f11-db99-45ef-80c1-6dae4796f16a
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004704958433032647, guid: f2fc5ea12953f5d438f9691fde139e39, type: 3}
       propertyPath: <GUID>k__BackingField
       value: 41951756-52ab-4162-89d9-de3d7bcdc09b
       objectReference: {fileID: 0}

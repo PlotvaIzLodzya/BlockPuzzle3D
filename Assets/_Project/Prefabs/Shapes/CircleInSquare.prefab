@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: b2d64d26-52bd-4dd4-9513-792cb1d69cc7
+  GUID: 2a0ff804-2b22-4df2-b4b8-a03ace62c696
   <Experience>k__BackingField: 20
   <Name>k__BackingField:
     EN: Circle

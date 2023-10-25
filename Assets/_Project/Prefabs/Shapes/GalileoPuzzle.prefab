@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: 900ab6df-0797-45bb-8f08-c77f2d28b9de
+  GUID: b26446f8-7856-4be0-8e55-bcc9f62be5c1
   <Experience>k__BackingField: 20
   <Name>k__BackingField:
     EN: Galileo

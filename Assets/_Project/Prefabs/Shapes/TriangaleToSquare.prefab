@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f071ea7b401fe43b317714bef4256b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: deb145bb-3588-4710-88c9-5999bd357173
+  GUID: 0b38b71e-224d-415e-9d96-5d8a16c0c954
   <Experience>k__BackingField: 20
   <Name>k__BackingField:
     EN: Triangle

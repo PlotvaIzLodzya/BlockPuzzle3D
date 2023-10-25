@@ -13,6 +13,14 @@ PrefabInstance:
       value: 49Puzzle Variant 7
       objectReference: {fileID: 0}
     - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: GUID
+      value: 2994fd7f-5642-4b30-8da3-794c839e4f77
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
+      propertyPath: _angleStep
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642926784519211395, guid: fa967d407f12fa6498391aa219d6a199, type: 3}
       propertyPath: <GUID>k__BackingField
       value: 5bc97b16-41e7-4b14-ad5f-f6969f5f19cd
       objectReference: {fileID: 0}
