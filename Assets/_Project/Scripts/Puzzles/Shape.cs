@@ -1,6 +1,7 @@
 using Assets.BlockPuzzle.Controll;
 using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.View;
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEditor;
@@ -25,21 +26,27 @@ namespace Assets.BlockPuzzle.Puzzles
         [SerializeField] private GroundProjection _groundProjection;
         
         private LayerMask _LevelComplitionMask;
-        private bool _choosen;
         private Vector3 _defaultPosition;
-        private Quaternion _defaultRotation;
         private Vector3 _offset;
+        private Quaternion _defaultRotation;
         private MeshRenderer _renderer;
+        private bool _choosen;
         private float _stepAngle;
         private float _stepSize;
+        private float _complitionTime;
+        private Color _defaultColor;
+        private Color _currentColor;
 
         public bool IsRequireHighlight { get;private set; }
+        public bool CanBeHighlighted { get;private set; }
         public bool Placed { get; private set; }
         public bool CanBeGrabbed { get; private set; }
 
         public void Construct(PuzzleDependency puzzleDependency)
         {
             CanBeGrabbed = true;
+            _complitionTime = puzzleDependency.CompitionTime;
+            CanBeHighlighted = true;
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _stepSize = puzzleDependency.StepSize;
             _offset = transform.position - vectorInt;
@@ -50,7 +57,11 @@ namespace Assets.BlockPuzzle.Puzzles
             _defaultPosition = transform.position;
             _defaultRotation = transform.rotation;
             _renderer = GetComponent<MeshRenderer>();
+            _currentColor = _renderer.material.color;
+            _defaultColor = puzzleDependency.DefaultColor;
             _groundProjection = new GroundProjection(GetComponentInChildren<ITrigger>(), transform, puzzleDependency.Masks.Ground);
+            _renderer.material.color = _defaultColor;
+            LerpColor(_currentColor);
         }
 
         [ContextMenu(nameof(DarkMagic))]
@@ -90,8 +101,9 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void OnComplete()
         {
-            IsRequireHighlight = false;
+            CanBeHighlighted = false;
             CanBeGrabbed = false;
+            LerpColor(_defaultColor);
         }
 
         public void Return()
@@ -157,6 +169,11 @@ namespace Assets.BlockPuzzle.Puzzles
                 _rotation.Rotate(Vector3.down, _stepAngle);
             if(Input.GetKeyDown(KeyCode.E))
                 _rotation.Rotate(Vector3.up, _stepAngle);
+        }
+
+        private void LerpColor(Color endColor)
+        {
+            _renderer.material.DOColor(endColor, duration : _complitionTime);
         }
     }
 

@@ -1,17 +1,23 @@
-﻿namespace Assets.BlockPuzzle.Dependency
+﻿using UnityEngine;
+
+namespace Assets.BlockPuzzle.Dependency
 {
 
     public struct PuzzleDependency
     {
         public Masks Masks { get; private set; }
+        public Color DefaultColor { get; private set; }
+        public float CompitionTime { get; private set; }
         public float StepAngle { get; private set; }
         public float RotationTime { get; private set; }
         public float StepTime { get; private set; }
         public float StepSize { get; private set; }
 
-        public PuzzleDependency(Masks masks)
+        public PuzzleDependency(Masks masks, Color color, float complitionTime)
         {
             Masks = masks;
+            CompitionTime = complitionTime;
+            DefaultColor = color;
             StepAngle = 45;
             RotationTime = 0.2f;
             StepTime = 0.2f;

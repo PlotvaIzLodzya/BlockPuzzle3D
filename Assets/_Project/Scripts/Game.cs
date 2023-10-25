@@ -4,6 +4,7 @@ using Assets.BlockPuzzle.Dependency;
 using Assets.BlockPuzzle.HUD;
 using Assets.BlockPuzzle.Proggression;
 using Assets.BlockPuzzle.Puzzles;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -22,6 +23,8 @@ namespace Assets.BlockPuzzle
         [SerializeField] private PuzzleMaterials _puzzleMaterials;
         [SerializeField] private Grab _grab;
         [SerializeField] private SetScene _setScene;
+        [SerializeField] private float _complitionDelay;
+        [SerializeField] private ParticleSystem _endParticles;
 
         private IComplition _levelComplition;
         private Puzzle _curentPuzzle;
@@ -106,7 +109,7 @@ namespace Assets.BlockPuzzle
         {
             var createdPuzzle = Instantiate(puzzlePrefab);
 
-            var puzzleDependency = new PuzzleDependency(_masks);
+            var puzzleDependency = new PuzzleDependency(_masks, _puzzleMaterials.ShapeMaterial.color, _complitionDelay);
             _levelComplition = createdPuzzle.Construct(puzzleDependency);
             _curentPuzzle = createdPuzzle;
             _levelComplition.OnChange += OnLevelProgress;
@@ -140,7 +143,18 @@ namespace Assets.BlockPuzzle
             if(_curentPuzzle.WasCompletedAlready == false)
                 _playerProgression.AddExp(_curentPuzzle.Experience);
 
-            _gameUI.OnLevelEnd();
+            _endParticles.Play();
+
+            StartCoroutine(Wait(_complitionDelay, () =>
+            {
+                _gameUI.OnLevelEnd();
+            }));
+        }
+
+        public IEnumerator Wait(float duration, Action action)
+        {
+            yield return new WaitForSeconds(duration);
+            action();
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Assets.BlockPuzzle.View
         {
             float lerp = elapsedTime / LerpTime;
 
-            if (_hovered || _highlightable.IsRequireHighlight)
+            if ((_hovered || _highlightable.IsRequireHighlight) && _highlightable.CanBeHighlighted)
             {
                 elapsedTime += Time.deltaTime;
                 _targetColor = GlowColor;
