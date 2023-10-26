@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.BlockPuzzle.Controll
@@ -8,12 +9,18 @@ namespace Assets.BlockPuzzle.Controll
     {
         public IGrabable CurrentGrab { get; }
         public void Place();
+
+        public event Action HideControl;
+        public event Action ShowControl;
     }
 
     public class Grab: MonoBehaviour, IGrab
     {
         private LayerMask _groundMask;
         private LayerMask _grabMask;
+
+        public event Action HideControl;
+        public event Action ShowControl;
 
         public IGrabable CurrentGrab { get; private set; }
         
@@ -30,6 +37,10 @@ namespace Assets.BlockPuzzle.Controll
                 return;
             }
 
+            if(CurrentGrab != null && Input.GetMouseButtonUp(0))
+            {
+                ShowControl?.Invoke();
+            }
 
             if (CurrentGrab != null)
             {
@@ -47,6 +58,7 @@ namespace Assets.BlockPuzzle.Controll
                 {
                     var position = groundHit.point;
                     CurrentGrab.SetPosition(position);
+                    HideControl.Invoke();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape))
@@ -73,7 +85,6 @@ namespace Assets.BlockPuzzle.Controll
 
         public void Place()
         {
-            Debug.Log("Place");
             if (CurrentGrab == null)
                 return;
 
@@ -81,6 +92,8 @@ namespace Assets.BlockPuzzle.Controll
                 CurrentGrab.Place();
             else
                 CurrentGrab.Return();
+
+            HideControl?.Invoke();
 
             CurrentGrab = null;
         }
@@ -104,6 +117,7 @@ namespace Assets.BlockPuzzle.Controll
         {
             CurrentGrab = grab;
             CurrentGrab.Grab();
+            HideControl?.Invoke();
         }
     }
 }

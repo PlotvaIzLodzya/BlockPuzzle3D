@@ -25,7 +25,6 @@ namespace Assets.BlockPuzzle.HUD
         public void HideMainMenu()
         {
             _menu.Hide();
-            _controllsHUD.Show();
         }
 
         public void ShowMainMenu()
