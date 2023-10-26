@@ -2,7 +2,7 @@
 
 namespace Assets.BlockPuzzle.Controll
 {
-    interface IGrabable
+    public interface IGrabable
     {
         public bool CanBeGrabbed { get; }
         public Transform transform { get; }

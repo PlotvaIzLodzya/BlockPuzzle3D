@@ -3,12 +3,19 @@ using UnityEngine.EventSystems;
 
 namespace Assets.BlockPuzzle.Controll
 {
-    public class Grab: MonoBehaviour
+
+    public interface IGrab
+    {
+        public IGrabable CurrentGrab { get; }
+        public void Place();
+    }
+
+    public class Grab: MonoBehaviour, IGrab
     {
         private LayerMask _groundMask;
         private LayerMask _grabMask;
 
-        private IGrabable _currentGrab;
+        public IGrabable CurrentGrab { get; private set; }
         
         public void Construct(Masks masks)
         {
@@ -20,19 +27,18 @@ namespace Assets.BlockPuzzle.Controll
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log("asdasd");
                 return;
             }
 
 
-            if (_currentGrab != null)
+            if (CurrentGrab != null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed && grabableObject!=_currentGrab)
+                if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed && grabableObject!=CurrentGrab)
                 {
-                    if (_currentGrab.IsPlaced == false)
-                        _currentGrab.Return();
+                    if (CurrentGrab.IsPlaced == false)
+                        CurrentGrab.Return();
 
                     GrabObject(grabableObject);
                 }
@@ -40,13 +46,13 @@ namespace Assets.BlockPuzzle.Controll
                 if (Physics.Raycast(ray, out RaycastHit groundHit, 100, _groundMask) && Input.GetMouseButton(0))
                 {
                     var position = groundHit.point;
-                    _currentGrab.SetPosition(position);
+                    CurrentGrab.SetPosition(position);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    _currentGrab.Return();
-                    _currentGrab = null;
+                    CurrentGrab.Return();
+                    CurrentGrab = null;
                 }
 
                 if(Input.GetKeyDown(KeyCode.Space))
@@ -55,7 +61,7 @@ namespace Assets.BlockPuzzle.Controll
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && _currentGrab == null)
+            if (Input.GetMouseButtonDown(0) && CurrentGrab == null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed)
@@ -67,36 +73,37 @@ namespace Assets.BlockPuzzle.Controll
 
         public void Place()
         {
-            if (_currentGrab == null)
+            Debug.Log("Place");
+            if (CurrentGrab == null)
                 return;
 
-            if (_currentGrab.CanPlace())
-                _currentGrab.Place();
+            if (CurrentGrab.CanPlace())
+                CurrentGrab.Place();
             else
-                _currentGrab.Return();
+                CurrentGrab.Return();
 
-            _currentGrab = null;
+            CurrentGrab = null;
         }
 
         public void Flip()
         {
-            _currentGrab?.Flip();
+            CurrentGrab?.Flip();
         }
 
         public void RotateToRight()
         {
-            _currentGrab?.RotateToRight();
+            CurrentGrab?.RotateToRight();
         }
 
         public void RotateToLeft() 
         {
-            _currentGrab?.RotateToLeft();
+            CurrentGrab?.RotateToLeft();
         }
 
         private void GrabObject(IGrabable grab)
         {
-            _currentGrab = grab;
-            _currentGrab.Grab();
+            CurrentGrab = grab;
+            CurrentGrab.Grab();
         }
     }
 }

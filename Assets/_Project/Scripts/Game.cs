@@ -85,8 +85,7 @@ namespace Assets.BlockPuzzle
 
             var puzzleViewDependency = new PuzzleViewDependency(letterDependency, squareDependency, puzzle49Dependency);
 
-            var controllsDependency = new ControllsHUDDependency(_grab.RotateToLeft, _grab.RotateToRight, _grab.Flip, _grab.Place);
-            _gameUI.Construct(puzzleViewDependency, controllsDependency, _playerProgression);
+            _gameUI.Construct(puzzleViewDependency, _grab, _playerProgression);
         }
 
         private IEnumerable<StartPuzzleDependency> CreateDependency<TPuzzle>(Difficulty difficulty) where TPuzzle: Puzzle

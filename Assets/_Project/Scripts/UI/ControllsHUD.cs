@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.BlockPuzzle.Controll;
+using UnityEngine;
 
 namespace Assets.BlockPuzzle.HUD
 {
@@ -9,12 +10,35 @@ namespace Assets.BlockPuzzle.HUD
         [SerializeField] private GameButton _rotateFlip;
         [SerializeField] private GameButton _rotatePlace;
 
-        public void Construct(ControllsHUDDependency dependency)
+        private IGrab _grab;
+
+        public void Construct(IGrab grab)
         {
-            _rotateLeft.Button.onClick.AddListener(() => dependency.RotateToLeft());
-            _rotateRight.Button.onClick.AddListener(() => dependency.RotateToRight());
-            _rotateFlip.Button.onClick.AddListener(() => dependency.Flip());
-            _rotatePlace.Button.onClick.AddListener(() => dependency.Place());
+            _grab = grab;
+            _rotateLeft.Button.onClick.AddListener(RotateLeft);
+            _rotateRight.Button.onClick.AddListener(RotateRight);
+            _rotateFlip.Button.onClick.AddListener(Flip);
+            _rotatePlace.Button.onClick.AddListener(Place);
+        }
+
+        public void RotateLeft()
+        {
+            _grab.CurrentGrab?.RotateToLeft();
+        }
+
+        public void RotateRight()
+        {
+            _grab.CurrentGrab?.RotateToRight();
+        }
+
+        public void Place()
+        {
+            _grab.Place();
+        }
+
+        public void Flip()
+        {
+            _grab.CurrentGrab?.Flip();
         }
     }
 }
