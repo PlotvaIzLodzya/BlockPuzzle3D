@@ -44,7 +44,7 @@ namespace Assets.BlockPuzzle.Complition
 
         private void OnColliderEntered(Collider other)
         {
-            if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out IShape shape) && shape.Placed)
+            if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out IShape shape) && shape.IsPlaced)
             {
                 if(_shapes.Contains(shape) == false)
                 {

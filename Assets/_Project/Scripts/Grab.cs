@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.BlockPuzzle.Controll
 {
@@ -7,7 +8,7 @@ namespace Assets.BlockPuzzle.Controll
         private LayerMask _groundMask;
         private LayerMask _grabMask;
 
-        private IGrab _currentGrab;
+        private IGrabable _currentGrab;
         
         public void Construct(Masks masks)
         {
@@ -17,12 +18,28 @@ namespace Assets.BlockPuzzle.Controll
 
         private void Update()
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("asdasd");
+                return;
+            }
+
+
             if (_currentGrab != null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 100, _groundMask))
+
+                if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed && grabableObject!=_currentGrab)
                 {
-                    var position = hit.point;
+                    if (_currentGrab.IsPlaced == false)
+                        _currentGrab.Return();
+
+                    GrabObject(grabableObject);
+                }
+
+                if (Physics.Raycast(ray, out RaycastHit groundHit, 100, _groundMask) && Input.GetMouseButton(0))
+                {
+                    var position = groundHit.point;
                     _currentGrab.SetPosition(position);
                 }
 
@@ -34,24 +51,52 @@ namespace Assets.BlockPuzzle.Controll
 
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
-                    if (_currentGrab.CanPlace())
-                        _currentGrab.Place();
-                    else
-                        _currentGrab.Return();
-
-                    _currentGrab = null;
+                    Place();
                 }
             }
 
             if (Input.GetMouseButtonDown(0) && _currentGrab == null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrab grab) && grab.CanBeGrabbed)
+                if (Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed)
                 {
-                    _currentGrab = grab;
-                    _currentGrab.Grab();
+                    GrabObject(grabableObject);
                 }
             }
+        }
+
+        public void Place()
+        {
+            if (_currentGrab == null)
+                return;
+
+            if (_currentGrab.CanPlace())
+                _currentGrab.Place();
+            else
+                _currentGrab.Return();
+
+            _currentGrab = null;
+        }
+
+        public void Flip()
+        {
+            _currentGrab?.Flip();
+        }
+
+        public void RotateToRight()
+        {
+            _currentGrab?.RotateToRight();
+        }
+
+        public void RotateToLeft() 
+        {
+            _currentGrab?.RotateToLeft();
+        }
+
+        private void GrabObject(IGrabable grab)
+        {
+            _currentGrab = grab;
+            _currentGrab.Grab();
         }
     }
 }

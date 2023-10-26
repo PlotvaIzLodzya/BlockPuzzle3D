@@ -121,6 +121,7 @@ MonoBehaviour:
   _winScreen: {fileID: 5938893210035987869}
   _menu: {fileID: 2992470847635201590}
   _progression: {fileID: 7338951640709088786}
+  _controllsHUD: {fileID: 6384412370510856469}
 --- !u!1001 &521274772434089241
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -255,6 +256,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3a10f4dd77e1ed42b9e07f42e94d60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6384412370510856469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6891085349312181260, guid: 17711be946147ee4f9d2f92c4d7fb680, type: 3}
+  m_PrefabInstance: {fileID: 521274772434089241}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d9b23764ef15d40bf79ced4aa591dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7338951640709088786 stripped

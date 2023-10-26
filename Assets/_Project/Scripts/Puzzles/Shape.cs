@@ -8,23 +8,22 @@ using UnityEngine;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
-
     public interface IShape
     {
-        public bool Placed { get; }
+        public bool IsPlaced { get; }
 
         public void Construct(PuzzleDependency dependency);
 
         public void OnComplete();
     }
 
-    public class Shape : MonoBehaviour, IGrab, IHighlightable, IShape
+    public class Shape : MonoBehaviour, IGrabable, IHighlightable, IShape
     {
         [SerializeField] private ShapeMovement _movement;
         [SerializeField] private ShapeRotation _rotation;
         [SerializeField] private GroundProjection _groundProjection;
         
-        private LayerMask _LevelComplitionMask;
+        private LayerMask _levelComplitionMask;
         private Vector3 _defaultPosition;
         private Vector3 _offset;
         private Quaternion _defaultRotation;
@@ -38,7 +37,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public bool IsRequireHighlight { get;private set; }
         public bool CanBeHighlighted { get;private set; }
-        public bool Placed { get; private set; }
+        public bool IsPlaced { get; private set; }
         public bool CanBeGrabbed { get; private set; }
 
         public void Construct(PuzzleDependency puzzleDependency)
@@ -49,7 +48,7 @@ namespace Assets.BlockPuzzle.Puzzles
             var vectorInt = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
             _stepSize = puzzleDependency.StepSize;
             _offset = transform.position - vectorInt;
-            _LevelComplitionMask = puzzleDependency.Masks.LevelComplition;
+            _levelComplitionMask = puzzleDependency.Masks.LevelComplition;
             _stepAngle = puzzleDependency.StepAngle;
             _movement.Construct(transform);
             _rotation.Construct(transform, puzzleDependency.RotationTime);
@@ -113,7 +112,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
             IsRequireHighlight = false;
 
-            if (Placed == false)
+            if (IsPlaced == false)
             {
                 _movement.MoveTo(_defaultPosition);
                 _rotation.RotateTo(_defaultRotation);
@@ -122,7 +121,7 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public bool CanPlace()
         {
-            var isProperPlace = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f, _LevelComplitionMask);
+            var isProperPlace = Physics.Raycast(transform.position, Vector3.down, 10f, _levelComplitionMask);
 
             return _groundProjection.IsEnoughSpace && isProperPlace;
         }
@@ -131,7 +130,7 @@ namespace Assets.BlockPuzzle.Puzzles
         {
             _movement.Lift(0);
             IsRequireHighlight = false;
-            Placed = true;
+            IsPlaced = true;
             _choosen = false;
         }
 
@@ -139,7 +138,7 @@ namespace Assets.BlockPuzzle.Puzzles
         {
             IsRequireHighlight = true;
             _choosen = true;
-            Placed = false;
+            IsPlaced = false;
             _movement.Lift(2);
         }
 
@@ -165,11 +164,26 @@ namespace Assets.BlockPuzzle.Puzzles
                 return;
 
             if (Input.GetKeyDown(KeyCode.R))
-                _rotation.Rotate(Vector3.forward,180);
-            if(Input.GetKeyDown(KeyCode.Q))
-                _rotation.Rotate(Vector3.down, _stepAngle);
-            if(Input.GetKeyDown(KeyCode.E))
-                _rotation.Rotate(Vector3.up, _stepAngle);
+                Flip();
+            if (Input.GetKeyDown(KeyCode.Q))
+                RotateToLeft();
+            if (Input.GetKeyDown(KeyCode.E))
+                RotateToRight();
+        }
+
+        public void Flip()
+        {
+            _rotation.Rotate(Vector3.forward, 180);
+        }
+
+        public void RotateToLeft()
+        {
+            _rotation.Rotate(Vector3.down, _stepAngle);
+        }
+
+        public void RotateToRight()
+        {
+            _rotation.Rotate(Vector3.up, _stepAngle);
         }
 
         private void LerpColor(Color endColor)

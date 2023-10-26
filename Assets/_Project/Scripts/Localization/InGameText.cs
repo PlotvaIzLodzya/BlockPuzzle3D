@@ -1,11 +1,8 @@
-﻿using Agava.YandexGames;
-using Assets.BlockPuzzle.HUD;
-using System;
-using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
+﻿using System;
 
 namespace Assets.BlockPuzzle.Localization
 {
+
     [Serializable]
     public struct InGameText
     {
