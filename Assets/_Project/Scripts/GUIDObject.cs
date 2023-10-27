@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.BlockPuzzle.Extensions;
+using System;
 using UnityEngine;
 
 namespace Assets.BlockPuzzle

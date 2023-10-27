@@ -27,7 +27,7 @@ public class ButtonAnimation : MonoBehaviour, IPointerClickHandler
         if (_animationCoroutine != null)
             StopCoroutine(_animationCoroutine);
 
-        if(enabled)
+        if(gameObject.activeInHierarchy)
             _animationCoroutine = StartCoroutine(WoopAnimation(transform, duration, animationCurve));
     }
 

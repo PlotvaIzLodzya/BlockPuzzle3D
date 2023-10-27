@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.BlockPuzzle.Extensions;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,6 +19,7 @@ namespace Assets.BlockPuzzle.Controll
     {
         private LayerMask _groundMask;
         private LayerMask _grabMask;
+        private Camera _camera;
 
         public event Action HideControl;
         public event Action ShowControl;
@@ -28,6 +30,7 @@ namespace Assets.BlockPuzzle.Controll
         {
             _grabMask = masks.Grab;
             _groundMask = masks.Ground;
+            _camera = Camera.main;
         }
 
         private void Update()
@@ -44,7 +47,9 @@ namespace Assets.BlockPuzzle.Controll
 
             if (CurrentGrab != null)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var rectangleArea = new RectangleArea(Vector2.zero, new Vector2(_camera.pixelWidth, _camera.pixelHeight));
+                var clampedPosition = VectorEnhance.ClampPosition(Input.mousePosition, rectangleArea);
+                Ray ray = _camera.ScreenPointToRay(clampedPosition);
 
                 if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hit, 50, _grabMask) && hit.rigidbody.TryGetComponent(out IGrabable grabableObject) && grabableObject.CanBeGrabbed && grabableObject!=CurrentGrab)
                 {
