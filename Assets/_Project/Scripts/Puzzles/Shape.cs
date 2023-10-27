@@ -5,6 +5,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.BlockPuzzle.Puzzles
 {
@@ -29,6 +30,7 @@ namespace Assets.BlockPuzzle.Puzzles
         private Quaternion _defaultRotation;
         private MeshRenderer _renderer;
         private bool _choosen;
+        private bool _fliped;
         private float _stepAngle;
         private float _stepSize;
         private float _complitionTime;
@@ -173,17 +175,33 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void Flip()
         {
-            _rotation.Rotate(Vector3.forward, 180);
+
+            _rotation.Rotate(Vector3.forward, angleStep : 180);
+            _fliped = !_fliped;
         }
 
         public void RotateToLeft()
         {
-            _rotation.Rotate(Vector3.down, _stepAngle);
+            var angle = GetAngle();
+
+            _rotation.Rotate(Vector3.down, angle);
         }
 
         public void RotateToRight()
         {
-            _rotation.Rotate(Vector3.up, _stepAngle);
+            var angle = GetAngle();
+
+            _rotation.Rotate(Vector3.up, angle);
+        }
+
+        private float GetAngle()
+        {
+            var stepAngle = _stepAngle;
+
+            if (_fliped)
+                stepAngle = -_stepAngle;
+
+            return stepAngle;
         }
 
         private void LerpColor(Color endColor)

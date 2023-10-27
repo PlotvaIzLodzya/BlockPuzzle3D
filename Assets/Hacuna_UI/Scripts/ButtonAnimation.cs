@@ -27,7 +27,8 @@ public class ButtonAnimation : MonoBehaviour, IPointerClickHandler
         if (_animationCoroutine != null)
             StopCoroutine(_animationCoroutine);
 
-        _animationCoroutine = StartCoroutine(WoopAnimation(transform, duration, animationCurve));
+        if(enabled)
+            _animationCoroutine = StartCoroutine(WoopAnimation(transform, duration, animationCurve));
     }
 
     private IEnumerator WoopAnimation(Transform transform, float duration, AnimationCurve animationCurve)
