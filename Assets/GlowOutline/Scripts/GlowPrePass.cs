@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class GlowPrePass : MonoBehaviour
@@ -8,7 +9,28 @@ public class GlowPrePass : MonoBehaviour
 
 	private Material _blurMat;
 
-	void OnEnable()
+	public static GlowPrePass Instance { get; private set; }
+	private int _lastResolution;
+
+	private void Awake()
+	{
+		Instance = this;	
+		Prepare();
+		_lastResolution = Screen.width * Screen.height;
+	}
+
+	public void TryPrePass()
+	{
+		var curResolution = Screen.width * Screen.height;
+
+		if (_lastResolution != curResolution)
+		{
+			_lastResolution = Screen.width * Screen.height;
+			Prepare();
+		}
+	}
+	
+	void Prepare()
 	{
         PrePass = new RenderTexture(Screen.width, Screen.height, 24);
 		//PrePass.antiAliasing = QualitySettings.antiAliasing;

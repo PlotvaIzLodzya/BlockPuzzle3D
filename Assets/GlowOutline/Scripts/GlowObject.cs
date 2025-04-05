@@ -46,6 +46,7 @@ namespace Assets.BlockPuzzle.View
         private void OnMouseEnter()
         {
             _hovered = true;
+            GlowPrePass.Instance.TryPrePass();
         }
 
         public void OnMouseExit()
