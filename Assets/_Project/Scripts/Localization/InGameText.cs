@@ -1,4 +1,5 @@
 ﻿using System;
+using Agava.YandexGames;
 
 namespace Assets.BlockPuzzle.Localization
 {
@@ -27,7 +28,7 @@ namespace Assets.BlockPuzzle.Localization
     lang = YandexGamesSdk.Environment.i18n.lang;
 #endif
 
-            var line = lang switch
+            return lang switch
             {
                 "en" => EN,
                 "ru" => RU,
@@ -35,8 +36,6 @@ namespace Assets.BlockPuzzle.Localization
 
                 _ => EN
             };
-
-            return line;
         }
     }
 }

@@ -36,7 +36,6 @@ RectTransform:
   - {fileID: 4510192428532843945}
   - {fileID: 2683809563458344312}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -82,7 +81,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 2560, y: 1600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -880,6 +879,10 @@ PrefabInstance:
     - target: {fileID: 677988976809786312, guid: f30e7138ccb437740a84f818c5648536, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500140660396651647, guid: f30e7138ccb437740a84f818c5648536, type: 3}
+      propertyPath: m_fontSize
+      value: 195.6
       objectReference: {fileID: 0}
     - target: {fileID: 3809853108485388825, guid: f30e7138ccb437740a84f818c5648536, type: 3}
       propertyPath: m_Name

@@ -232,10 +232,13 @@ namespace Assets.BlockPuzzle.Puzzles
 
         public void Rotate(Vector3 direction, float angleStep)
         {
+            if(IsRotating)
+                return;
+            
             var angle = direction * angleStep;
-            var position = _transform.rotation * Quaternion.Euler(angle);
+            var rotation = _transform.rotation * Quaternion.Euler(angle);
             Stop();
-            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(position, _rotationTime));
+            _rotatingCoroutine = Game.CoroutineHandler.StartCoroutine(Rotating(rotation, _rotationTime));
         }
 
         public void RotateTo(Quaternion rotation)
